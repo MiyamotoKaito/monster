@@ -1,4 +1,6 @@
+using System.IO;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FindPath : MonoBehaviour
 {
@@ -12,4 +14,11 @@ public class FindPath : MonoBehaviour
     private Transform _endPos;
     /// <summary>開始地点から到達地点までの座標の配列</summary>
     private Vector3[] _positions = new Vector3[_maxPositions];
+    /// <summary>パス</summary>
+    private NavMeshPath _path;
+
+    private void Awake()
+    {
+        _path = new NavMeshPath();
+    }
 }
