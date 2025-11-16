@@ -28,4 +28,11 @@ public class FindPath : MonoBehaviour
         NavMesh.CalculatePath(_startPos.localPosition, _endPos.localPosition, NavMesh.AllAreas, _path);
         _path.GetCornersNonAlloc(_positions);
     }
+    private void OnDrawGizmosSelected()
+    {
+        for (int i = 0; i < _positions.Length - 1; i++)
+        {
+            Gizmos.DrawLine(_positions[i], _positions[i + 1]);
+        }
+    }
 }
