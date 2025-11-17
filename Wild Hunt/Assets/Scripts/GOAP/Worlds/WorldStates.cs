@@ -45,11 +45,27 @@ public class WorldStates
         if (_states.ContainsKey(key))
         {
             _states[key] += value;
+            //優先度が0以下になったら辞書から削除する
+            if (_states[key] > 0)
+            {
+                RemoveState(key);
+            }
         }
         //渡されたステートが登録されていなかったら登録する
         else
         {
             _states.Add(key, value);
+        }
+    }
+    /// <summary>
+    /// ステートを削除する
+    /// </summary>
+    /// <param name="key"></param>
+    public void RemoveState(string key)
+    {
+        if (_states.ContainsKey(key))
+        {
+            _states.Remove(key);
         }
     }
 }
