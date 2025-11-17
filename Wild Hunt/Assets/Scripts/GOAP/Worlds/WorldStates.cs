@@ -71,6 +71,11 @@ public class WorldStates
             _states.Remove(key);
         }
     }
+    /// <summary>
+    /// ’l‚ğİ’è‚·‚é
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public void SetState(string key, int value)
     {
         if (_states.ContainsKey(key))
@@ -81,5 +86,13 @@ public class WorldStates
         {
             _states.Add(key, value);
         }
+    }
+    /// <summary>
+    /// «‘‚ğ•Ô‚·
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, int> GetStates()
+    {
+        return _states;
     }
 }
