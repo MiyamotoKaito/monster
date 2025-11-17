@@ -71,4 +71,15 @@ public class WorldStates
             _states.Remove(key);
         }
     }
+    public void SetState(string key, int value)
+    {
+        if (_states.ContainsKey(key))
+        {
+            _states[key] = value;
+        }
+        else
+        {
+            _states.Add(key, value);
+        }
+    }
 }
