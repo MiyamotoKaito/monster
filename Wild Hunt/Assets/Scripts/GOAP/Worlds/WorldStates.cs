@@ -34,4 +34,22 @@ public class WorldStates
     {
         _states.Add(key, value);
     }
+    /// <summary>
+    /// ステートの値を変更する
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    private void ModifyState(string key, int value)
+    {
+        //優先度の値を変更する
+        if (_states.ContainsKey(key))
+        {
+            _states[key] += value;
+        }
+        //渡されたステートが登録されていなかったら登録する
+        else
+        {
+            _states.Add(key, value);
+        }
+    }
 }
