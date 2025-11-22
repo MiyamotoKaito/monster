@@ -26,13 +26,13 @@ public class Node
 public class GPlanner : MonoBehaviour
 {
     /// <summary>
-    /// 
+    /// 最短経路のアクションの道をプランニングした戻り値Queue
     /// </summary>
     /// <param name="actions"></param>
     /// <param name="goal"></param>
     /// <param name="state"></param>
     /// <returns></returns>
-    private Queue<GAction> _plan(List<GAction> actions,
+    public Queue<GAction> Plan(List<GAction> actions,
                                  Dictionary<string, int> goal,
                                  WorldState state)
     {
@@ -41,7 +41,7 @@ public class GPlanner : MonoBehaviour
         // 利用可能なアクションをフィルタリング
         foreach (GAction action in actions)
         {
-            if(action.IsAchievable())
+            if (action.IsAchievable())
             {
                 usebleActions.Add(action);
             }
@@ -53,7 +53,6 @@ public class GPlanner : MonoBehaviour
         //最初のノードなので親ノードはnull、コストは0、
         //状態はエージェントの現在の状態、アクションはnull
         Node start = new Node(null, 0, GWorld.Instance.GetWorld().GetStates(), null);
-
 
         bool success = BuildGraph(start, leaves, usebleActions, goal);
         if (success)
@@ -105,8 +104,16 @@ public class GPlanner : MonoBehaviour
         // プランを返す
         return queue;
     }
-    
-    private bool BuildGraph(Node parent, 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="leaves"></param>
+    /// <param name="usebleActions"></param>
+    /// <param name="goal"></param>
+    /// <returns></returns>
+    private bool BuildGraph(Node parent,
                             List<Node> leaves,
                             List<GAction> usebleActions,
                             Dictionary<string, int> goal)
