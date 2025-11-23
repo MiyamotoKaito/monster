@@ -14,7 +14,7 @@ public abstract class GAction : MonoBehaviour
     // ターゲットオブジェクト
     public GameObject _target;
     // ターゲットのタグ
-    public GameObject _targetTag;
+    public string _targetTag;
     // 動作の持続時間
     public float _duration = 0f;
     // 前提条件
