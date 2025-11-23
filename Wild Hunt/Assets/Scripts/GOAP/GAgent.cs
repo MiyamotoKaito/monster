@@ -82,5 +82,28 @@ public class GAgent : MonoBehaviour
                 }
             }
         }
+
+        //ゴールが達成された場合の処理
+        if (_actionQueue != null && _actionQueue.Count == 0)
+        {
+            if (_currentGoal.Remove)
+            {
+                _subGoals.Remove(_currentGoal);
+            }
+            _gPlanner = null;
+        }
+        //アクションキュー取り出し
+        if (_actionQueue != null && _actionQueue.Count > 0)
+        {
+            _currentAction = _actionQueue.Dequeue();
+            if (_currentAction.PrePerform())
+            {
+                //特定のタグを持つオブジェクトをターゲットに設定する
+                if (_currentAction._target == null && _currentAction._targetTag != "")
+                {
+                    _currentAction._target = GameObject.FindWithTag(_currentAction._targetTag);
+                }
+            }
+        }
     }
 }
