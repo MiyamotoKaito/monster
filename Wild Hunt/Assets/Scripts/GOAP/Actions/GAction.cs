@@ -30,7 +30,7 @@ public abstract class GAction : MonoBehaviour
     //エージェントの信念
     public WorldState agentBeliefs;
     //動作が実行中かどうかのフラグ
-    private bool _running = false;
+    public bool _running = false;
     //コンストラクタ
     public GAction()
     {
