@@ -71,7 +71,7 @@ public class GAgent : MonoBehaviour
 
             //優先度が高いサブゴールから降順にソートする
             var sortedGoals = _subGoals.OrderByDescending(x => x.Value);
-            
+
             foreach (var sg in sortedGoals)
             {
                 _actionQueue = _gPlanner.Plan(_gActions, sg.Key.SubGoals, null);
@@ -102,6 +102,11 @@ public class GAgent : MonoBehaviour
                 if (_currentAction._target == null && _currentAction._targetTag != "")
                 {
                     _currentAction._target = GameObject.FindWithTag(_currentAction._targetTag);
+                }
+                //アクションを実行中に設定する
+                if (_currentAction._targetTag != null)
+                {
+                    _currentAction._running = true;
                 }
             }
         }
