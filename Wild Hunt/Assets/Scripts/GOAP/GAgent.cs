@@ -107,6 +107,7 @@ public class GAgent : MonoBehaviour
                 if (_currentAction._targetTag != null)
                 {
                     _currentAction._running = true;
+                    _currentAction._agent.SetDestination(_currentAction._target.transform.position);
                 }
             }
         }
