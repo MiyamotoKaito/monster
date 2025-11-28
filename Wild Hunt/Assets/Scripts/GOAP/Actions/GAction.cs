@@ -70,8 +70,14 @@ public abstract class GAction : MonoBehaviour
         }
         return true;
     }
-    //動作の前処理
+    /// <summary>
+    /// 動作の前処理
+    /// </summary>
+    /// <returns></returns>
     public abstract bool PrePerform();
-    //動作の後処理
+    /// <summary>
+    /// 動作の後処理
+    /// </summary>
+    /// <returns></returns>
     public abstract bool PostPerform();
 }
