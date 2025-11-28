@@ -12,9 +12,10 @@ public class SubGoal
     public bool Remove;
 
     //変数を初期化するコンストラクタ
-    public SubGoal(Dictionary<string, int> goals, bool remove)
+    public SubGoal(string goalName,int priority, bool remove)
     {
-        SubGoals = new Dictionary<string, int>(goals);
+        SubGoals = new Dictionary<string, int>();
+        SubGoals.Add(goalName, priority);
         Remove = remove;
     }
 }
@@ -22,16 +23,18 @@ public class SubGoal
 public class GAgent : MonoBehaviour
 {
     //実行するアクションのリスト
-    private List<GAction> _gActions = new List<GAction>();
+    [SerializeField]
+    protected List<GAction> _gActions = new List<GAction>();
     //サブゴールの辞書
-    private Dictionary<SubGoal, int> _subGoals = new Dictionary<SubGoal, int>();
+    protected Dictionary<SubGoal, int> _subGoals = new Dictionary<SubGoal, int>();
 
-    private GPlanner _gPlanner;
-    private Queue<GAction> _actionQueue;
-    private GAction _currentAction;
-    private SubGoal _currentGoal;
-    private bool invoked;
-    private void Awake()
+    protected GPlanner _gPlanner;
+    protected Queue<GAction> _actionQueue;
+    [SerializeField]
+    protected GAction _currentAction;
+    protected SubGoal _currentGoal;
+    protected bool invoked;
+    protected void BaseAwake()
     {
         //エージェントのアクションをすべて取得する
         GAction[] actions = GetComponents<GAction>();
@@ -109,6 +112,12 @@ public class GAgent : MonoBehaviour
                     _currentAction._running = true;
                     _currentAction._agent.SetDestination(_currentAction._target.transform.position);
                 }
+            }
+            //実行しようとしたアクションのいずれかが失敗した場合、
+            //アクションキューをクリアして全体を再設計
+            else
+            {
+                _actionQueue = null;
             }
         }
     }
