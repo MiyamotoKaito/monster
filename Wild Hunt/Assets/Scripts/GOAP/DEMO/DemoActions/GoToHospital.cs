@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using GOAP.DEMO.DemoActions;
+using Unity.Collections;
+using UnityEngine;
 
-public class GoToHospital : GAction
+public class GoToHospital : DEMOGAction
 {
+    [ReadOnly, SerializeField]
+    private string wawa= "GoToHospital";
     public override bool PrePerform()
     {
         Debug.Log("Going to the hospital...");

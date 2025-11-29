@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using GOAP.DEMO;
 using GOAP.DEMO.DemoActions;
+using GOAP.DEMO.WorldState;
 using UnityEngine;
-public class Node
+public class DEMONode
 {
     // ノードの親ノード
-    public Node Parent;
+    public DEMONode Parent;
     // ノードのコスト
     public float Cost;
     // ノードの状態
@@ -14,7 +14,7 @@ public class Node
     public DEMOGAction Action;
 
     // コンストラクタ
-    public Node(Node parent, float cost, Dictionary<string, int> allState, DEMOGAction action)
+    public DEMONode(DEMONode parent, float cost, Dictionary<string, int> allState, DEMOGAction action)
     {
         Parent = parent;
         Cost = cost;
@@ -25,7 +25,7 @@ public class Node
 /// <summary>
 /// GOAPのプランナー
 /// </summary>
-public class GPlanner
+public class DEMOGPlanner
 {
     /// <summary>
     /// 最短経路のアクションの道をプランニングした戻り値Queue
@@ -49,12 +49,12 @@ public class GPlanner
             }
         }
         // 葉ノードのリスト
-        List<Node> leaves = new List<Node>();
+        List<DEMONode> leaves = new List<DEMONode>();
 
         // 開始ノードの作成
         //最初のノードなので親ノードはnull、コストは0、
         //状態はエージェントの現在の状態、アクションはnull
-        Node start = new Node(null, 0, DEMOGWorld.Instance.GetWorld().GetStates(), null);
+        DEMONode start = new DEMONode(null, 0, DEMOGWorld.Instance.GetWorld().GetStates(), null);
 
         bool success = BuildGraph(start, leaves, usebleActions, goal);
         if (!success)
@@ -64,9 +64,9 @@ public class GPlanner
         }
 
         // 最小コストの葉ノード
-        Node cheapest = null;
+        DEMONode cheapest = null;
         // 最小コストの葉ノードを見つける
-        foreach (Node leaf in leaves)
+        foreach (DEMONode leaf in leaves)
         {
             if (cheapest == null)
             {
@@ -82,7 +82,7 @@ public class GPlanner
         }
         // プランのアクションリスト
         List<DEMOGAction> result = new List<DEMOGAction>();
-        Node n = cheapest;
+        DEMONode n = cheapest;
         // ルートノードまでさかのぼりアクションを収集
         while (n != null)
         {
@@ -115,8 +115,8 @@ public class GPlanner
     /// <param name="usebleActions"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    private bool BuildGraph(Node parent,
-                            List<Node> leaves,
+    private bool BuildGraph(DEMONode parent,
+                            List<DEMONode> leaves,
                             List<DEMOGAction> usebleActions,
                             Dictionary<string, int> goal)
     {
@@ -141,7 +141,7 @@ public class GPlanner
                     }
                 }
                 // 新しいノードを作成
-                Node node = new Node(parent, parent.Cost + action.cost, currentState, action);
+                DEMONode node = new DEMONode(parent, parent.Cost + action.cost, currentState, action);
                 // ゴールが達成されたかどうかをチェック
                 if (GoalAchived(goal, currentState))
                 {

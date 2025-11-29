@@ -30,7 +30,7 @@ public class DEMOGAgent : MonoBehaviour
     //サブゴールの辞書
     protected Dictionary<DEMOSubGoal, int> _subGoals = new Dictionary<DEMOSubGoal, int>();
 
-    protected GPlanner _gPlanner;
+    protected DEMOGPlanner _gPlanner;
     protected Queue<DEMOGAction> _actionQueue;
     [SerializeField]
     protected DEMOGAction _currentAction;
@@ -72,7 +72,7 @@ public class DEMOGAgent : MonoBehaviour
         //アクションキューが存在しているか、アクションが残っていれば
         if (_gPlanner != null || _actionQueue != null)
         {
-            _gPlanner = new GPlanner();
+            _gPlanner = new DEMOGPlanner();
 
             //優先度が高いサブゴールから降順にソートする
             var sortedGoals = _subGoals.OrderByDescending(x => x.Value);
