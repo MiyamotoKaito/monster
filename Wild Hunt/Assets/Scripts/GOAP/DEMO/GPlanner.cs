@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GOAP.DEMO.DemoActions;
 using UnityEngine;
 public class Node
 {
@@ -9,10 +10,10 @@ public class Node
     // ノードの状態
     public Dictionary<string, int> State;
     // ノードのアクション
-    public GAction Action;
+    public DEMOGAction Action;
 
     // コンストラクタ
-    public Node(Node parent, float cost, Dictionary<string, int> allState, GAction action)
+    public Node(Node parent, float cost, Dictionary<string, int> allState, DEMOGAction action)
     {
         Parent = parent;
         Cost = cost;
@@ -23,7 +24,7 @@ public class Node
 /// <summary>
 /// GOAPのプランナー
 /// </summary>
-public class GPlanner : MonoBehaviour
+public class GPlanner
 {
     /// <summary>
     /// 最短経路のアクションの道をプランニングした戻り値Queue
@@ -32,14 +33,14 @@ public class GPlanner : MonoBehaviour
     /// <param name="goal"></param>
     /// <param name="state"></param>
     /// <returns></returns>
-    public Queue<GAction> Plan(List<GAction> actions,
+    public Queue<DEMOGAction> Plan(List<DEMOGAction> actions,
                                  Dictionary<string, int> goal,
                                  WorldState state)
     {
         // 利用可能なアクションのリスト
-        List<GAction> usebleActions = new List<GAction>();
+        List<DEMOGAction> usebleActions = new List<DEMOGAction>();
         // 利用可能なアクションをフィルタリング
-        foreach (GAction action in actions)
+        foreach (DEMOGAction action in actions)
         {
             if (action.IsAchievable())
             {
@@ -55,7 +56,7 @@ public class GPlanner : MonoBehaviour
         Node start = new Node(null, 0, GWorld.Instance.GetWorld().GetStates(), null);
 
         bool success = BuildGraph(start, leaves, usebleActions, goal);
-        if (success)
+        if (!success)
         {
             Debug.Log("NO Plan");
             return null;
@@ -79,7 +80,7 @@ public class GPlanner : MonoBehaviour
             }
         }
         // プランのアクションリスト
-        List<GAction> result = new List<GAction>();
+        List<DEMOGAction> result = new List<DEMOGAction>();
         Node n = cheapest;
         // ルートノードまでさかのぼりアクションを収集
         while (n != null)
@@ -91,13 +92,13 @@ public class GPlanner : MonoBehaviour
             n = n.Parent;
         }
         // アクションリストをキューに変換
-        Queue<GAction> queue = new Queue<GAction>();
-        foreach (GAction a in result)
+        Queue<DEMOGAction> queue = new Queue<DEMOGAction>();
+        foreach (DEMOGAction a in result)
         {
             queue.Enqueue(a);
         }
         Debug.Log($"The Plan is : ");
-        foreach (GAction a in queue)
+        foreach (DEMOGAction a in queue)
         {
             Debug.Log($"Q : {a.name}");
         }
@@ -115,13 +116,13 @@ public class GPlanner : MonoBehaviour
     /// <returns></returns>
     private bool BuildGraph(Node parent,
                             List<Node> leaves,
-                            List<GAction> usebleActions,
+                            List<DEMOGAction> usebleActions,
                             Dictionary<string, int> goal)
     {
         // フラグ：パスが見つかったかどうか
         bool foundPath = false;
         // すべての利用可能なアクションをループ
-        foreach (GAction action in usebleActions)
+        foreach (DEMOGAction action in usebleActions)
         {
             // アクションが親ノードの状態で実行可能かどうかをチェック
             if (action.IsAchievableGiven(parent.State))
@@ -149,7 +150,7 @@ public class GPlanner : MonoBehaviour
                 // ゴールが達成されていない場合、再帰的にグラフを構築
                 else
                 {
-                    List<GAction> subset = ActionSubSet(usebleActions, action);
+                    List<DEMOGAction> subset = ActionSubSet(usebleActions, action);
                     bool found = BuildGraph(node, leaves, subset, goal);
                     if (found)
                     {
@@ -175,10 +176,10 @@ public class GPlanner : MonoBehaviour
         // すべてのゴール条件が状態に存在する場合、ゴールは達成されている
         return true;
     }
-    private List<GAction> ActionSubSet(List<GAction> usebleActions, GAction removeMe)
+    private List<DEMOGAction> ActionSubSet(List<DEMOGAction> usebleActions, DEMOGAction removeMe)
     {
-        List<GAction> subset = new List<GAction>();
-        foreach (GAction a in usebleActions)
+        List<DEMOGAction> subset = new List<DEMOGAction>();
+        foreach (DEMOGAction a in usebleActions)
         {
             if (!a.Equals(removeMe))
             {
