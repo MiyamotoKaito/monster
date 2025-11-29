@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GOAP.DEMO;
 using GOAP.DEMO.DemoActions;
 using UnityEngine;
 public class Node
@@ -35,7 +36,7 @@ public class GPlanner
     /// <returns></returns>
     public Queue<DEMOGAction> Plan(List<DEMOGAction> actions,
                                  Dictionary<string, int> goal,
-                                 WorldState state)
+                                 DEMOWorldState state)
     {
         // 利用可能なアクションのリスト
         List<DEMOGAction> usebleActions = new List<DEMOGAction>();
@@ -53,7 +54,7 @@ public class GPlanner
         // 開始ノードの作成
         //最初のノードなので親ノードはnull、コストは0、
         //状態はエージェントの現在の状態、アクションはnull
-        Node start = new Node(null, 0, GWorld.Instance.GetWorld().GetStates(), null);
+        Node start = new Node(null, 0, DEMOGWorld.Instance.GetWorld().GetStates(), null);
 
         bool success = BuildGraph(start, leaves, usebleActions, goal);
         if (!success)
