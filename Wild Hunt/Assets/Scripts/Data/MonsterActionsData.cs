@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName ="Monster/Actions")]
+[CreateAssetMenu(fileName = "Data", menuName ="Data/Monster/Actions")]
 public class MonsterActionsData : ScriptableObject
 {
     [SerializeReference, SubclassSelector]
