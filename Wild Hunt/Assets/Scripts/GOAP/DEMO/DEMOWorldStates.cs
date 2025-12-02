@@ -49,7 +49,7 @@ namespace GOAP.DEMO.WorldState
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        private void ModifyState(string key, int value)
+        public void ModifyState(string key, int value)
         {
             //優先度の値を変更する
             if (_states.ContainsKey(key))
