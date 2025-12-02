@@ -1,5 +1,4 @@
 ﻿using GOAP.DEMO.DemoActions;
-using Unity.Collections;
 using UnityEngine;
 
 public class GoToHospital : DEMOGAction
