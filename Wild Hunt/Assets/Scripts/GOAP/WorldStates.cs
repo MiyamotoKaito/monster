@@ -25,6 +25,7 @@ namespace GOAP.WorldState
     /// </summary>
     public class WorldStates
     {
+        public static WorldStates Instance;
         public Dictionary<string, int> States => _states;
         [SerializeField]
         private Dictionary<string, int> _states = new Dictionary<string, int>();
