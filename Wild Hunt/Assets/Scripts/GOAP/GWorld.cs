@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿using GOAP.WorldState;
+using UnityEngine;
 
-public class GWorld : MonoBehaviour
+namespace GOAP.GWorld
 {
-    public static GWorld Instance = new GWorld();
-    
-    static GWorld()
+    /// <summary>
+    /// グローバルワールドステート管理クラス
+    /// </summary>
+    public class GWorld : MonoBehaviour
     {
+        /// <summary>GWorldのシングルトン </summary>
+        public static GWorld Instance = new GWorld();
+        private static WorldStates _worldStates;
+        private GWorld()
+        {
+            _worldStates = new WorldStates();
+        }
     }
 }
