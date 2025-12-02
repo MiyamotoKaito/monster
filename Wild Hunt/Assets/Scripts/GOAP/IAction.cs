@@ -1,3 +1,1 @@
-﻿using UnityEngine;
-
-public interface IAction { }
+﻿public interface IAction { }
