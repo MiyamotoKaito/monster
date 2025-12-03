@@ -5,9 +5,11 @@ public class Bite : IAction
     [SerializeField]
     private int _priority;
 
+    [SerializeReference, SubclassSelector]
+    private IWorldState _state;
     public bool PerCondition(IWorldState worldState)
     {
-        throw new System.NotImplementedException();
+        return worldState.Value <= 100 ? true : false;
     }
     public bool Effect(IWorldState worldState)
     {
