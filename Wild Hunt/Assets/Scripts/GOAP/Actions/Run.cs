@@ -1,22 +1,21 @@
-﻿using GOAP.WorldState;
+﻿using GOAP.WorldStates;
+using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Run : IAction
 {
-    [SerializeField]
-    private string ActionName;
     [SerializeField]
     private int _priority;
     [SerializeField]
     private float _speed;
-
-    public bool Effect(WorldState state)
+    public bool PerCondition(IWorldState worldState)
+    {
+        throw new System.NotImplementedException();
+    }
+    public bool Effect(IWorldState worldState)
     {
         throw new System.NotImplementedException();
     }
 
-    public bool PerCondition(WorldState state)
-    {
-        throw new System.NotImplementedException();
-    }
 }

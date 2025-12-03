@@ -1,18 +1,15 @@
-﻿using GOAP.WorldState;
+﻿using GOAP.WorldStates;
 using UnityEngine;
 public class Bite : IAction
 {
     [SerializeField]
-    private string ActionName;
-    [SerializeField]
     private int _priority;
 
-    public bool PerCondition(WorldState state)
+    public bool PerCondition(IWorldState worldState)
     {
         throw new System.NotImplementedException();
     }
-
-    public bool Effect(WorldState state)
+    public bool Effect(IWorldState worldState)
     {
         throw new System.NotImplementedException();
     }
