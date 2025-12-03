@@ -1,17 +1,15 @@
-﻿using GOAP.WorldState;
-
-public interface IAction
+﻿public interface IAction
 {
     /// <summary>
     /// 前提条件
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    bool PerCondition(WorldState state);
+    bool PerCondition(IWorldState worldState);
     /// <summary>
     /// 効果
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    bool Effect(WorldState state);
+    bool Effect(IWorldState worldState);
 }
