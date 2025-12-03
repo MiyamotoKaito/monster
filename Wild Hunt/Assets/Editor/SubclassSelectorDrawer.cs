@@ -45,7 +45,11 @@ public class SubclassSelectorDrawer : PropertyDrawer
     {
         currentTypeIndex = Array.IndexOf(typeFullNameArray, typeFullName);
     }
-
+    /// <summary>
+    /// 全ての継承されたタイプを取得
+    /// </summary>
+    /// <param name="baseType"></param>
+    /// <param name="includeMono"></param>
     void GetAllInheritedTypes(Type baseType, bool includeMono)
     {
         Type monoType = typeof(MonoBehaviour);
@@ -90,31 +94,41 @@ public class SubclassSelectorDrawer : PropertyDrawer
             ;
 
         var propertyPaths = property.propertyPath.Split('.');
-        var parentType = property.serializedObject.targetObject.GetType();
-        var fieldInfo = parentType.GetField(propertyPaths[0], bindingAttr);
-        var fieldType = fieldInfo.FieldType;
+        Type currentType = property.serializedObject.targetObject.GetType();
 
-        // 配列もしくはリストの場合
-        if (propertyPaths.Contains("Array"))
+        for (int i = 0; i < propertyPaths.Length; i++)
         {
+            string path = propertyPaths[i];
+
+            // 配列・リストのインデックスアクセス "Array.data[0]" をスキップ
+            if (path == "Array")
+            {
+                i++; // data[x] もスキップ
+                continue;
+            }
+
+            FieldInfo fieldInfo = currentType.GetField(path, bindingAttr);
+            if (fieldInfo == null) break;
+
+            Type fieldType = fieldInfo.FieldType;
+
             // 配列の場合
             if (fieldType.IsArray)
             {
-                // GetElementType で要素の型を取得する
-                var elementType = fieldType.GetElementType();
-                return elementType;
+                currentType = fieldType.GetElementType();
             }
             // リストの場合
+            else if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(System.Collections.Generic.List<>))
+            {
+                currentType = fieldType.GetGenericArguments()[0];
+            }
             else
             {
-                // GetGenericArguments で要素の型を取得する
-                var genericArguments = fieldType.GetGenericArguments();
-                var elementType = genericArguments[0];
-                return elementType;
+                currentType = fieldType;
             }
         }
 
-        return fieldType;
+        return currentType;
     }
 }
 #endif
