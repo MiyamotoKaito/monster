@@ -13,25 +13,17 @@ MonoBehaviour:
   m_Name: DragonData
   m_EditorClassIdentifier: Assembly-CSharp::MonsterActionsData
   Actions:
-  - rid: 8072880502808248383
-  - rid: 8072880502808248384
-  - rid: 8072880502808248385
+  - rid: 8992580218348896338
   references:
     version: 2
     RefIds:
-    - rid: 8072880502808248383
-      type: {class: Bite, ns: , asm: Assembly-CSharp}
-      data:
-        ActionName: 
-        _priority: 0
-    - rid: 8072880502808248384
-      type: {class: Eat, ns: , asm: Assembly-CSharp}
-      data:
-        ActionName: 
-        _priority: 0
-    - rid: 8072880502808248385
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8992580218348896338
       type: {class: Run, ns: , asm: Assembly-CSharp}
       data:
-        ActionName: 
         _priority: 0
         _speed: 0
+        _preCondition:
+        - rid: -2
+        _effect: []
