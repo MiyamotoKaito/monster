@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace GOAP.WorldStates
 {
@@ -10,15 +8,23 @@ namespace GOAP.WorldStates
     /// </summary>
     public class WorldStates : MonoBehaviour
     {
-        public static WorldStates Instance = new WorldStates();
+        public static WorldStates Instance;
 
         public List<IWorldState> WorldStateStates => _worldStates;
-        [ReadOnly, SerializeField]
+
+        [SerializeField]
+        [Header("ワールドステートデータ")]
+        private WorldStatesData _worldStatesData;
+
         private List<IWorldState> _worldStates;
 
+        [SerializeReference, ReadOnly]
         private Dictionary<string, int> _worldStateDictionary;
+
         private void Awake()
         {
+            _worldStates = _worldStatesData.WorldStates;
+
             foreach (var state in WorldStateStates)
             {
                 _worldStateDictionary.Add(state.Name, state.Value);
