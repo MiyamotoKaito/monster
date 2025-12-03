@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using GOAP.DEMO.DemoActions;
 using UnityEngine;
 
-public class SubGoal
+public class DEMOSubGoal
 {
     // サブゴールの条件
     public Dictionary<string, int> SubGoals;
@@ -12,7 +14,7 @@ public class SubGoal
     public bool Remove;
 
     //変数を初期化するコンストラクタ
-    public SubGoal(string goalName,int priority, bool remove)
+    public DEMOSubGoal(string goalName,int priority, bool remove)
     {
         SubGoals = new Dictionary<string, int>();
         SubGoals.Add(goalName, priority);
@@ -20,25 +22,25 @@ public class SubGoal
     }
 }
 
-public class GAgent : MonoBehaviour
+public class DEMOGAgent : MonoBehaviour
 {
     //実行するアクションのリスト
     [SerializeField]
-    protected List<GAction> _gActions = new List<GAction>();
+    protected List<DEMOGAction> _gActions = new List<DEMOGAction>();
     //サブゴールの辞書
-    protected Dictionary<SubGoal, int> _subGoals = new Dictionary<SubGoal, int>();
+    protected Dictionary<DEMOSubGoal, int> _subGoals = new Dictionary<DEMOSubGoal, int>();
 
-    protected GPlanner _gPlanner;
-    protected Queue<GAction> _actionQueue;
+    protected DEMOGPlanner _gPlanner;
+    protected Queue<DEMOGAction> _actionQueue;
     [SerializeField]
-    protected GAction _currentAction;
-    protected SubGoal _currentGoal;
+    protected DEMOGAction _currentAction;
+    protected DEMOSubGoal _currentGoal;
     protected bool invoked;
     protected void BaseAwake()
     {
         //エージェントのアクションをすべて取得する
-        GAction[] actions = GetComponents<GAction>();
-        foreach (GAction a in actions)
+        DEMOGAction[] actions = GetComponents<DEMOGAction>();
+        foreach (DEMOGAction a in actions)
         {
             _gActions.Add(a);
         }
@@ -70,7 +72,7 @@ public class GAgent : MonoBehaviour
         //アクションキューが存在しているか、アクションが残っていれば
         if (_gPlanner != null || _actionQueue != null)
         {
-            _gPlanner = new GPlanner();
+            _gPlanner = new DEMOGPlanner();
 
             //優先度が高いサブゴールから降順にソートする
             var sortedGoals = _subGoals.OrderByDescending(x => x.Value);

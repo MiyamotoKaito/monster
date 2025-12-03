@@ -1,25 +1,26 @@
-﻿/// <summary>
+﻿using GOAP.DEMO.WorldState;
+/// <summary>
 /// グローバルワールドステート管理クラス
 /// </summary>
-public class GWorld
+public class DEMOGWorld
 {
     //シングルトンインスタンス
-    private static readonly GWorld instanse = new GWorld();
+    private static readonly DEMOGWorld instanse = new DEMOGWorld();
     //グローバルワールドステート
-    private static WorldStates _world;
+    private static DEMOWorldStates _world;
     //静的コンストラクタ
-    static GWorld()
+    static DEMOGWorld()
     {
-        _world = new WorldStates();
+        _world = new DEMOWorldStates();
     }
     /// <summary>
     /// 
     /// </summary>
-    private GWorld()
+    private DEMOGWorld()
     {
     }
     //シングルトンインスタンスの取得
-    public static GWorld Instance
+    public static DEMOGWorld Instance
     {
         get { return instanse; }
     }
@@ -27,7 +28,7 @@ public class GWorld
     /// グローバルワールドステートの取得
     /// </summary>
     /// <returns></returns>
-    public WorldStates GetWorld()
+    public DEMOWorldStates GetWorld()
     {
         return _world;
     }
