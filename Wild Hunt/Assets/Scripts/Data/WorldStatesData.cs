@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using GOAP.WorldStates;
+using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/WorldState")]
 public class WorldStatesData : ScriptableObject
 {
-    public IWorldState[] WorldStates => _worldStates;
+    public List<IWorldState> WorldStates => _worldStates;
 
     [SerializeReference, SubclassSelector]
-    private IWorldState[] _worldStates;
+    private List<IWorldState> _worldStates;
 }
