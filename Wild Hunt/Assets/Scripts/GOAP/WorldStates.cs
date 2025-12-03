@@ -10,22 +10,16 @@ namespace GOAP.WorldStates
     {
         public static WorldStates Instance;
 
-        public List<IWorldState> WorldStateStates => _worldStates;
-
         [SerializeField]
         [Header("ワールドステートデータ")]
         private WorldStatesData _worldStatesData;
 
         private List<IWorldState> _worldStates;
-
-        [SerializeReference, ReadOnly]
         private Dictionary<string, int> _worldStateDictionary;
 
         private void Awake()
         {
-            _worldStates = _worldStatesData.WorldStates;
-
-            foreach (var state in WorldStateStates)
+            foreach (var state in _worldStates)
             {
                 _worldStateDictionary.Add(state.Name, state.Value);
             }
