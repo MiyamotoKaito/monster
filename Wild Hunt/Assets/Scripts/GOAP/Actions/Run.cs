@@ -6,7 +6,7 @@ using UnityEngine;
 public class Run : IAction
 {
     [SerializeField]
-    private int _priority;
+    private int _cost;
     [SerializeField]
     private float _speed;
     public bool PerCondition(IWorldState worldState)

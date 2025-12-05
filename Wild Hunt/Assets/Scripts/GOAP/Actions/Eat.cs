@@ -3,7 +3,7 @@
 public class Eat : IAction
 {
     [SerializeField]
-    private int _priority;
+    private int _cost;
 
     public bool PerCondition(IWorldState worldState)
     {
