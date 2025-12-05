@@ -14,11 +14,16 @@ namespace GOAP.WorldStates
         [Header("ワールドステートデータ")]
         private WorldStatesData _worldStatesData;
 
-        private List<IWorldState> _worldStates;
-        private Dictionary<string, int> _worldStateDictionary;
+        private List<IWorldState> _worldStates = new();
+        private Dictionary<string, int> _worldStateDictionary = new();
 
         private void Awake()
         {
+            //IWorldStateのリストと辞書を初期化
+            foreach (var data in _worldStatesData.WorldStates)
+            {
+                _worldStates.Add(data);
+            }
             foreach (var state in _worldStates)
             {
                 _worldStateDictionary.Add(state.Name, state.Value);
