@@ -14,16 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterActionsData
   Actions:
   - rid: 8992580218348896338
+  - rid: 8072880549635293258
+  - rid: 8072880545956102209
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8072880545956102209
+      type: {class: Bite, ns: , asm: Assembly-CSharp}
+      data:
+        _priority: 0
+        _state:
+          rid: 8072880549635293252
+    - rid: 8072880549635293252
+      type: {class: GroundState, ns: , asm: Assembly-CSharp}
+      data:
+        _name: 
+        _value: 0
+        _valueScale: 0
+    - rid: 8072880549635293258
+      type: {class: Eat, ns: , asm: Assembly-CSharp}
+      data:
+        _priority: 0
     - rid: 8992580218348896338
       type: {class: Run, ns: , asm: Assembly-CSharp}
       data:
         _priority: 0
         _speed: 0
-        _preCondition:
-        - rid: -2
-        _effect: []
