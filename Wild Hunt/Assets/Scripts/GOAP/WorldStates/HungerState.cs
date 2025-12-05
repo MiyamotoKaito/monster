@@ -3,11 +3,11 @@
 [System.Serializable]
 public class Hunger : IWorldState
 {
-    public int Value => throw new System.NotImplementedException();
+    public string Name => _name;
+    public int Value => _value;
 
-    public string Name => throw new System.NotImplementedException();
     [SerializeField]
     private string _name;
-    [SerializeField]
+    [SerializeField, Range(0, 100)]
     private int _value;
 }
