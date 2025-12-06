@@ -6,7 +6,7 @@ namespace GOAP.GPlanner
     {
         public Queue<IAction> Planning(List<IAction> actions,
                                        Dictionary<string, int> goal,
-                                       Dictionary<string, int>currntState)
+                                       Dictionary<string, int> currntState)
         {
             //利用可能なアクションのリスト
             List<IAction> usableActions = new List<IAction>();
@@ -17,10 +17,26 @@ namespace GOAP.GPlanner
                 //アクションが現在のワールドステートで実行可能かの確認を行う処理を追加しないといけない
                 usableActions.Add(action);
             }
-            List<GNode> leaves = new List<GNode>();
+            //グラフ構築に必要なリスト
+            List<GNode> leaves = new List<GNode>();//グラフ構築で達成した「葉」ノード(計算パスの最終候補)
+            //最初のノード
             GNode start = new GNode(null, 0, currntState, null);
+
+            //A*アルゴリズムでグラフを構築し、最もコストの低いゴールパスを見つける
+            if (BuildGraph(start, leaves, usableActions, goal))
+            {
+                //ゴールを達成できる一番コストが掛からないノードを探す
+                GNode cheapest = null;
+                foreach (GNode leaf in leaves)
+                {
+                    if (leaf == null || leaf.Cost < cheapest.Cost)
+                    {
+                        cheapest = leaf;
+                    }
+                }
+            }
         }
-        public bool BuildGraph(GNode parent,
+        private bool BuildGraph(GNode parent,
             List<GNode> leaves,
             List<IAction> usebleAction,
             Dictionary<string, int> goal)
@@ -28,7 +44,7 @@ namespace GOAP.GPlanner
             bool foundPath = false;
             foreach (var act in usebleAction)
             {
-                if(act.PerCondition())
+                if (act.PerCondition())
             }
 
         }
@@ -36,6 +52,24 @@ namespace GOAP.GPlanner
         private void CanGoalAchieved()
         {
 
+        }
+        /// <summary>
+        /// 受け取ったゴールノードから親ノードを辿り、アクションのパスを再構築する
+        /// </summary>
+        /// <param name="cheapestGoalNode"></param>
+        /// <returns></returns>
+        private Queue<IAction> ReconstructPath(GNode cheapestGoalNode)
+        {
+            List<IAction> path = new List<IAction>();
+            GNode current = cheapestGoalNode;
+
+            while (current.Action != null)
+            {
+                path.Add(current.Action);
+                current = current.Parent;
+            }
+            path.Reverse();
+            return new Queue<IAction>(path);
         }
     }
 }
