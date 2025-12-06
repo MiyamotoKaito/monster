@@ -34,7 +34,12 @@ namespace GOAP.GPlanner
                         cheapest = leaf;
                     }
                 }
+                //最適パスを再構築して返す
+                return ReconstructPath(cheapest);
             }
+
+            //ゴールを達成できなかった場合はnullを返す
+            return null;
         }
         private bool BuildGraph(GNode parent,
             List<GNode> leaves,
