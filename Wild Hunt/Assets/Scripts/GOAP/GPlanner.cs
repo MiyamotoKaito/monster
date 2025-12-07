@@ -41,15 +41,32 @@ namespace GOAP.GPlanner
             //ゴールを達成できなかった場合はnullを返す
             return null;
         }
+        /// <summary>
+        /// A*アルゴリズムでグラフを再帰的に構築する
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="leaves"></param>
+        /// <param name="usebleAction"></param>
+        /// <param name="goal"></param>
+        /// <returns></returns>
         private bool BuildGraph(GNode parent,
             List<GNode> leaves,
             List<IAction> usebleAction,
             Dictionary<string, int> goal)
         {
             bool foundPath = false;
+
+            //利用可能なアクションを1つづつチェック
             foreach (var act in usebleAction)
             {
-                if (act.PerCondition())
+                // 1. アクションの前提条件が親ノードのステートで満たされているかを確認
+                // act.PerCondition(parent.State) の実装がIActionインターフェースに必要ですが、
+                // IActionインターフェースは IWorldState を引数にとるので、
+                // ここでは一旦、現在のノードの状態とアクションの前提条件を比較するヘルパー関数を使用します。
+
+                // 【注意】 IActionインターフェースのPerCondition/EffectはIWorldStateを引数にとっていますが、
+                // 実際にはアクションごとに「このステートがこの値なら実行可能」というチェックが必要です。
+                // ここでは、そのチェックを `CheckPreconditions` で抽象化します。
             }
 
         }
