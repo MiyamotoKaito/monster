@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3c8485a6307cba43911d371b0681661
+    m_Address: Assets/Data/Monsters/Actions/DragonData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 264640824cbce8d4fa3a9b9c87fece79, type: 2}
   m_SchemaSet:
