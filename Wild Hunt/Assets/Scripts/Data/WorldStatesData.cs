@@ -1,6 +1,4 @@
-﻿using GOAP.WorldStates;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/WorldState")]
