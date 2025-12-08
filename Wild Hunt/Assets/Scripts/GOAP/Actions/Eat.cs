@@ -16,7 +16,7 @@ public class Eat : IAction
 
     public bool PreCondition()
     {
-        if(worldState.Value <= )
+        throw new System.NotImplementedException();
     }
 
     public bool Effect()
