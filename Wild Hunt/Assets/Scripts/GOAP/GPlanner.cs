@@ -85,7 +85,14 @@ namespace GOAP.GPlanner
         /// <returns></returns>
         private bool CheckPreconditions(Dictionary<string, int> preconditions, Dictionary<string, int> currentState)
         {
-
+            foreach (var pre in preconditions)
+            {
+                if (!currentState.ContainsKey(pre.Key))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         /// <summary>
         /// 受け取ったゴールノードから親ノードを辿り、アクションのパスを再構築する
