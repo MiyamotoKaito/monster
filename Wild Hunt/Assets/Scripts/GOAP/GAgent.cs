@@ -31,6 +31,10 @@ public class GAgent : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+        // 1. ゴール達成済み、またはアクションキューがない場合は、新しい計画を立てる
+        if (_actionQueue.Count == 0 || _currentGoal == null)
+        {
+            _currentAction = null;
+        }
     }
 }
