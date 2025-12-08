@@ -68,14 +68,33 @@ namespace GOAP.GPlanner
                 // 実際にはアクションごとに「このステートがこの値なら実行可能」というチェックが必要です。
                 // ここでは、そのチェックを `CheckPreconditions` で抽象化します。
 
-
+                Dictionary<string, int> actPreconditions = GetAction;
             }
 
         }
 
-        private void CanGoalAchieved()
+        /// <summary>
+        /// ゴールが現在のステートで達成されたか判断する
+        /// </summary>
+        /// <param name="goal"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        private bool CanGoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> state)
         {
-
+            foreach (var g in goal)
+            {
+                //ゴールのKeyがステートに存在し、かつ値が一致するか
+                //もしくはゴールの値が0で‘Remove’の場合を考慮
+                if (state.ContainsKey(g.Key) && state[g.Key] == g.Value)
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         /// <summary>
         /// アクションの前提条件が現在のステートで満たされいるか判断する
@@ -102,7 +121,7 @@ namespace GOAP.GPlanner
         /// <param name="currentState"></param>
         /// <param name="effects"></param>
         /// <returns></returns>
-        private Dictionary<string, int> CreateNewState(Dictionary<string ,int> currentState, Dictionary<string, int> effects)
+        private Dictionary<string, int> CreateNewState(Dictionary<string, int> currentState, Dictionary<string, int> effects)
         {
             //現在のステートのコピーを作る
             Dictionary<string, int> newState = new(currentState);
