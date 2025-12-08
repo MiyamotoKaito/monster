@@ -1,5 +1,12 @@
-﻿public interface IAction
+﻿using System.Collections.Generic;
+
+public interface IAction
 {
+    Dictionary<string, int> Preconditions { get; }
+    Dictionary<string , int> Effects { get; }
+
+    int Cost { get; }
+
     /// <summary>
     /// 前提条件
     /// </summary>
