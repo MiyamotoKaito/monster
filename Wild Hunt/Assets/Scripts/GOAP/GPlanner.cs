@@ -96,6 +96,12 @@ namespace GOAP.GPlanner
             return true;
         }
 
+        /// <summary>
+        /// 現在のステートにアクションの効果を適応し、新しいステートを作成する
+        /// </summary>
+        /// <param name="currentState"></param>
+        /// <param name="effects"></param>
+        /// <returns></returns>
         private Dictionary<string, int> CreateNewState(Dictionary<string ,int> currentState, Dictionary<string, int> effects)
         {
             Dictionary<string, int> newState = new(currentState);
