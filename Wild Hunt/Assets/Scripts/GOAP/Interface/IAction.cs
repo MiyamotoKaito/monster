@@ -11,10 +11,10 @@ public interface IAction
     /// 前提条件
     /// </summary>
     /// <returns></returns>
-    bool PreCondition(IWorldState worldState);
+    bool PreCondition();
     /// <summary>
     /// 効果
     /// </summary>
     /// <returns></returns>
-    bool Effect(IWorldState worldState);
+    bool Effect();
 }

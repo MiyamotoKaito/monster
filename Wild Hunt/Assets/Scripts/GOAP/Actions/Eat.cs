@@ -5,6 +5,8 @@ public class Eat : IAction
 {
     [SerializeField]
     private int _cost;
+    [SerializeReference, SubclassSelector]
+    private IWorldState state;
 
     public Dictionary<string, int> Preconditions => throw new System.NotImplementedException();
 
@@ -12,12 +14,12 @@ public class Eat : IAction
 
     public int Cost => throw new System.NotImplementedException();
 
-    public bool PreCondition(IWorldState worldState)
+    public bool PreCondition()
     {
-        throw new System.NotImplementedException();
+        if(worldState.Value <= )
     }
 
-    public bool Effect(IWorldState worldState)
+    public bool Effect()
     {
         throw new System.NotImplementedException();
     }

@@ -16,11 +16,11 @@ public class Run : IAction
 
     public int Cost => throw new System.NotImplementedException();
 
-    public bool PreCondition(IWorldState worldState)
+    public bool PreCondition()
     {
         throw new System.NotImplementedException();
     }
-    public bool Effect(IWorldState worldState)
+    public bool Effect()
     {
         throw new System.NotImplementedException();
     }
