@@ -65,7 +65,10 @@ namespace GOAP.GPlanner
                     // 2. 新しい状態のシミュレーション
                     // 親ノードの状態にアクションの効果を適用した新しいワールドステートの辞書作成
                     Dictionary<string, int> newState = CreateNewState(parent.State, act.Effects);
-
+                    
+                    // 3. ノードの作成
+                    int newCost = parent.Cost + act.Cost;
+                    GNode newNode = new GNode(parent, newCost, newState, act);
                 }
             }
 
