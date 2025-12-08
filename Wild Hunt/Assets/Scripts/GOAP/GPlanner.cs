@@ -95,6 +95,11 @@ namespace GOAP.GPlanner
             }
             return true;
         }
+
+        private Dictionary<string, int> CreateNewState()
+        {
+
+        }
         /// <summary>
         /// 受け取ったゴールノードから親ノードを辿り、アクションのパスを再構築する
         /// </summary>
