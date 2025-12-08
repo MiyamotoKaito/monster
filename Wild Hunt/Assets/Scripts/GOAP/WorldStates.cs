@@ -14,19 +14,32 @@ namespace GOAP.WorldStates
         [Header("ワールドステートデータ")]
         private WorldStatesData _worldStatesData;
 
-        private List<IWorldState> _worldStates = new();
+
         private Dictionary<string, int> _worldStateDictionary = new();
 
         private void Awake()
         {
-            //IWorldStateのリストと辞書を初期化
-            foreach (var data in _worldStatesData.WorldStates)
+            // 1. シングルトンの初期化
+            if (Instance == null)
             {
-                _worldStates.Add(data);
+                Instance = this;
             }
-            foreach (var state in _worldStates)
+            else
             {
-                _worldStateDictionary.Add(state.Name, state.Value);
+                Destroy(gameObject);
+                return;
+            }
+
+            // 2. データのロードと重複チェック
+            if (_worldStatesData != null)
+            {
+                foreach (var state in _worldStatesData.WorldStates)
+                {
+                    if (!_worldStateDictionary.ContainsKey(state.Name))
+                    {
+                        _worldStateDictionary.Add(state.Name, state.Value);
+                    }
+                }
             }
         }
         /// <summary>
