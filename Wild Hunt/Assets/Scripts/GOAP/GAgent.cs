@@ -14,14 +14,15 @@ public class GAgent : MonoBehaviour
     [Header("アクションのデータ")]
     private MonsterActionsData _actionsData;
 
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private IAction _currentAction;
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private GSubGoal _currentGoal;
-
 
     private GPlanner _planner;
     private WorldStates _worldStates;
+
+
 
     private void Start()
     {
