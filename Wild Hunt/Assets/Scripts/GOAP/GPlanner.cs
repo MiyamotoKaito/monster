@@ -60,15 +60,13 @@ namespace GOAP.GPlanner
             foreach (var act in usebleAction)
             {
                 // 1. アクションの前提条件が親ノードのステートで満たされているかを確認
-                // act.PerCondition(parent.State) の実装がIActionインターフェースに必要ですが、
-                // IActionインターフェースは IWorldState を引数にとるので、
-                // ここでは一旦、現在のノードの状態とアクションの前提条件を比較するヘルパー関数を使用します。
+                if (CheckPreconditions(act.Preconditions, parent.State))
+                {
+                    // 2. 新しい状態のシミュレーション
+                    // 親ノードの状態にアクションの効果を適用した新しいワールドステートの辞書作成
+                    Dictionary<string, int> newState = CreateNewState(parent.State, act.Effects);
 
-                // 【注意】 IActionインターフェースのPerCondition/EffectはIWorldStateを引数にとっていますが、
-                // 実際にはアクションごとに「このステートがこの値なら実行可能」というチェックが必要です。
-                // ここでは、そのチェックを `CheckPreconditions` で抽象化します。
-
-                Dictionary<string, int> actPreconditions = GetAction;
+                }
             }
 
         }
