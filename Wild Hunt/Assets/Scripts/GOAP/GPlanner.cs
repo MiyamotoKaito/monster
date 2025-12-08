@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 namespace GOAP.GPlanner
 {
@@ -46,18 +47,18 @@ namespace GOAP.GPlanner
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="leaves"></param>
-        /// <param name="usebleAction"></param>
+        /// <param name="usableAction"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
         private bool BuildGraph(GNode parent,
             List<GNode> leaves,
-            List<IAction> usebleAction,
+            List<IAction> usableAction,
             Dictionary<string, int> goal)
         {
             bool foundPath = false;
 
             //利用可能なアクションを1つづつチェック
-            foreach (var act in usebleAction)
+            foreach (var act in usableAction)
             {
                 // 1. アクションの前提条件が親ノードのステートで満たされているかを確認
                 if (CheckPreconditions(act.Preconditions, parent.State))
@@ -71,11 +72,24 @@ namespace GOAP.GPlanner
                     GNode newNode = new GNode(parent, newCost, newState, act);
 
                     // 4. ゴール達成度チェック
+
                     if (CanGoalAchieved(goal, newState))
                     {
                         //ゴール達成可能なノードをleavesに追加
                         leaves.Add(newNode);
                         foundPath = true;//パスが見つかった
+                    }
+                    else
+                    {
+                        // 5. 引数に渡されたアクションをのぞいた残りのアクションで次のノードを探す
+                        //　新しいリストを作成し、現在のアクションを一時的に除外
+                        List<IAction> subset = usableAction.Except(new[] { act }).ToList();
+
+                        // 再帰呼び出し: 新しいノードを親として、サブセットのアクションでグラフを構築
+                        if (BuildGraph(newNode, leaves, subset, goal))
+                        {
+                            foundPath = true;
+                        }
                     }
                 }
             }
@@ -115,8 +129,8 @@ namespace GOAP.GPlanner
         {
             foreach (var pre in preconditions)
             {
-                //アクションの前提条件に必要なステートがあるかチェックする
-                if (!currentState.ContainsKey(pre.Key))
+                //アクションの前提条件に必要なステートのキーか値がアクションが要求する値と一致しているかチェックする
+                if (!currentState.ContainsKey(pre.Key) || currentState[pre.Key] != pre.Value)
                 {
                     return false;
                 }
