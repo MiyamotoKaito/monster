@@ -104,8 +104,10 @@ namespace GOAP.GPlanner
         /// <returns></returns>
         private Dictionary<string, int> CreateNewState(Dictionary<string ,int> currentState, Dictionary<string, int> effects)
         {
+            //現在のステートのコピーを作る
             Dictionary<string, int> newState = new(currentState);
 
+            //アクションの効果を適応し、ステートを上書き/保存
             foreach (var effect in effects)
             {
                 newState[effect.Key] = effect.Value;
@@ -122,12 +124,13 @@ namespace GOAP.GPlanner
             List<IAction> path = new List<IAction>();
             GNode current = cheapestGoalNode;
 
+            //スタートノードにたどり着くまで子から親をたどる
             while (current.Action != null)
             {
                 path.Add(current.Action);
                 current = current.Parent;
             }
-            path.Reverse();
+            path.Reverse();//リストを逆にして、正規の実行順序にする
             return new Queue<IAction>(path);
         }
     }
