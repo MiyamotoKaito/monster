@@ -67,11 +67,23 @@ namespace GOAP.GPlanner
                 // 【注意】 IActionインターフェースのPerCondition/EffectはIWorldStateを引数にとっていますが、
                 // 実際にはアクションごとに「このステートがこの値なら実行可能」というチェックが必要です。
                 // ここでは、そのチェックを `CheckPreconditions` で抽象化します。
+
+
             }
 
         }
 
         private void CanGoalAchieved()
+        {
+
+        }
+        /// <summary>
+        /// アクションの前提条件が現在のステートで満たされいるか判断する
+        /// </summary>
+        /// <param name="preconditions"></param>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
+        private bool CheckPreconditions(Dictionary<string, int> preconditions, Dictionary<string, int> currentState)
         {
 
         }
