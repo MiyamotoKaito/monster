@@ -93,7 +93,7 @@ namespace GOAP.GPlanner
                     }
                 }
             }
-
+            return foundPath;
         }
 
         /// <summary>
