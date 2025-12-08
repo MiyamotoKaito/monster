@@ -87,6 +87,7 @@ namespace GOAP.GPlanner
         {
             foreach (var pre in preconditions)
             {
+                //アクションの前提条件に必要なステートがあるかチェックする
                 if (!currentState.ContainsKey(pre.Key))
                 {
                     return false;
