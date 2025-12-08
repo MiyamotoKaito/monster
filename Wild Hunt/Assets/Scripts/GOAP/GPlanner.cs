@@ -69,6 +69,14 @@ namespace GOAP.GPlanner
                     // 3. ノードの作成
                     int newCost = parent.Cost + act.Cost;
                     GNode newNode = new GNode(parent, newCost, newState, act);
+
+                    // 4. ゴール達成度チェック
+                    if (CanGoalAchieved(goal, newState))
+                    {
+                        //ゴール達成可能なノードをleavesに追加
+                        leaves.Add(newNode);
+                        foundPath = true;//パスが見つかった
+                    }
                 }
             }
 
