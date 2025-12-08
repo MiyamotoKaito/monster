@@ -15,7 +15,7 @@ public class Bite : IAction
 
     public int Cost => throw new System.NotImplementedException();
 
-    public bool PerCondition(IWorldState worldState)
+    public bool PreCondition(IWorldState worldState)
     {
         var value = worldState.Value + _effectValue;
         return value <= 100 ? true : false;

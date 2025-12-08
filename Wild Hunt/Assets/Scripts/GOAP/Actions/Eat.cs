@@ -12,7 +12,7 @@ public class Eat : IAction
 
     public int Cost => throw new System.NotImplementedException();
 
-    public bool PerCondition(IWorldState worldState)
+    public bool PreCondition(IWorldState worldState)
     {
         throw new System.NotImplementedException();
     }
