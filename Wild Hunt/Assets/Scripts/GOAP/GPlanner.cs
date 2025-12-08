@@ -96,9 +96,15 @@ namespace GOAP.GPlanner
             return true;
         }
 
-        private Dictionary<string, int> CreateNewState()
+        private Dictionary<string, int> CreateNewState(Dictionary<string ,int> currentState, Dictionary<string, int> effects)
         {
+            Dictionary<string, int> newState = new(currentState);
 
+            foreach (var effect in effects)
+            {
+                newState[effect.Key] = effect.Value;
+            }
+            return newState;
         }
         /// <summary>
         /// 受け取ったゴールノードから親ノードを辿り、アクションのパスを再構築する
