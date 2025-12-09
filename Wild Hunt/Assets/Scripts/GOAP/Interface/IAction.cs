@@ -2,19 +2,38 @@
 
 public interface IAction
 {
-    Dictionary<string, int> Preconditions { get; }
-    Dictionary<string , int> Effects { get; }
+    // --- 計画策定フェーズ (GPlannerが参照する静的な定義) ---
 
+    /// <summary>
+    /// プランナーがグラフ構築に使用する、必要なワールドステートの条件リスト
+    /// </summary>
+    Dictionary<string, int> Preconditions { get; }
+
+    /// <summary>
+    /// プランナーがシミュレーションに使用する、ワールドステートへの影響リスト
+    /// </summary>
+    Dictionary<string, int> Effects { get; }
+
+    /// <summary>
+    /// アクションの実行コスト (A*のg値)
+    /// </summary>
     int Cost { get; }
 
+
+    // --- 実行フェーズ (GAgentが参照する動的なロジック) ---
+
     /// <summary>
-    /// 前提条件
+    /// 実行前にリアルタイムの環境で前提条件が満たされているかチェックする
     /// </summary>
-    /// <returns></returns>
-    bool PreCondition();
+    /// <param name="agent">アクションを実行するエージェント</param>
+    /// <returns>実行可能なら true</returns>
+    bool CheckPrecondition(GAgent agent);
+    // ※ GAgentクラスはまだ実装中かと思いますが、実行者を渡すのが最も汎用的です。
+
     /// <summary>
-    /// 効果
+    /// アクションの実際の実行ロジック
     /// </summary>
-    /// <returns></returns>
-    bool Effect();
+    /// <param name="agent">アクションを実行するエージェント</param>
+    /// <returns>アクションの完了（成功）なら true</returns>
+    bool Perform(GAgent agent);
 }
