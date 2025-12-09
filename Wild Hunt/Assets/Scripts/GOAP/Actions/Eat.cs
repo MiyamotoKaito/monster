@@ -5,21 +5,25 @@ public class Eat : IAction
 {
     [SerializeField]
     private int _cost;
-    [SerializeReference, SubclassSelector]
-    private IWorldState state;
+    [SerializeField]
+    private int _;
 
     public Dictionary<string, int> Preconditions => throw new System.NotImplementedException();
 
     public Dictionary<string, int> Effects => throw new System.NotImplementedException();
 
     public int Cost => throw new System.NotImplementedException();
-
-    public bool PreCondition()
+    public bool CheckPrecondition(GAgent agent)
     {
         throw new System.NotImplementedException();
     }
 
-    public bool Effect()
+    public bool Perform(GAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Execute(GAgent agent)
     {
         throw new System.NotImplementedException();
     }

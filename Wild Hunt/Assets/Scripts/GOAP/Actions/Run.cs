@@ -16,13 +16,18 @@ public class Run : IAction
 
     public int Cost => throw new System.NotImplementedException();
 
-    public bool PreCondition()
-    {
-        throw new System.NotImplementedException();
-    }
-    public bool Effect()
+    public bool CheckPrecondition(GAgent agent)
     {
         throw new System.NotImplementedException();
     }
 
+    public bool Perform(GAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Execute(GAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
 }

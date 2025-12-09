@@ -1738,6 +1738,7 @@ GameObject:
   - component: {fileID: 2104015377}
   - component: {fileID: 2104015382}
   - component: {fileID: 2104015381}
+  - component: {fileID: 2104015383}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -1868,6 +1869,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentMove
   _speed: 5
   _distance: 0.5
+--- !u!114 &2104015383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104015376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a8c4ccb87d60345a5d09e2a3dffc61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GAgent
+  _actionsData: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
