@@ -43,4 +43,9 @@ public class GAgent : MonoBehaviour
             }
         }
     }
+
+    private bool GoalAchieved(Dictionary<string, int> goal)
+    {
+
+    }
 }
