@@ -6,7 +6,7 @@ using GOAP.GPlanner;
 public class GAgent : MonoBehaviour
 {
     /// <summary>サブゴールと優先度の辞書<summary>
-    private Dictionary<GSubGoal, int> _subGoals = new();
+    private Dictionary<int, GSubGoal> _subGoals = new();
     /// <summary>ソートされたアクションのQueue<summary>
     private Queue<IAction> _actionQueue = new();
 
@@ -19,8 +19,6 @@ public class GAgent : MonoBehaviour
     private GPlanner _planner;
     private WorldStates _worldStates;
 
-
-
     private void Start()
     {
         _planner = GetComponent<GPlanner>();
@@ -32,7 +30,17 @@ public class GAgent : MonoBehaviour
         // 1. ゴール達成済み、またはアクションキューがない場合は、新しい計画を立てる
         if (_actionQueue.Count == 0 || _currentGoal == null)
         {
+            //アクションをリセット
             _currentAction = null;
+
+            // 2. 優先度の高い順にゴールをチェックし、計画を試みる
+            GSubGoal bestGoal = null;
+            int largestPriority = int.MinValue;
+
+            foreach (var entry in _subGoals)
+            {
+                GSubGoal goal = entry.Value;
+            }
         }
     }
 }
