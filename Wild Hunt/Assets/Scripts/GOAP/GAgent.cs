@@ -44,6 +44,11 @@ public class GAgent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ゴールが現在のワールドステートで達成されているか確認する
+    /// </summary>
+    /// <param name="goal"></param>
+    /// <returns></returns>
     private bool GoalAchieved(Dictionary<string, int> goal)
     {
         // 現在のワールドステートを取得
