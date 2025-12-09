@@ -70,5 +70,9 @@ public class GAgent : MonoBehaviour
         {
             _subGoals.Add(priority, goal);
         }
+        else
+        {
+            Debug.LogWarning($"ゴールの優先度 {priority} は既に存在します。");
+        }
     }
 }
