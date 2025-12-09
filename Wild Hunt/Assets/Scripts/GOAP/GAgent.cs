@@ -46,6 +46,8 @@ public class GAgent : MonoBehaviour
 
     private bool GoalAchieved(Dictionary<string, int> goal)
     {
+        // 現在のワールドステートを取得
+        Dictionary<string, int> worldState = _worldStates.GetStates();
 
     }
 }
