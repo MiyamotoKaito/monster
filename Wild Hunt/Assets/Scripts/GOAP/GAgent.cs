@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GOAP.WorldStates;
 using GOAP.GPlanner;
+using System.Linq;
 
 public class GAgent : MonoBehaviour
 {
@@ -40,6 +41,62 @@ public class GAgent : MonoBehaviour
             foreach (var entry in _subGoals)
             {
                 GSubGoal goal = entry.Value;
+                if (GoalAchieved(goal.SubGoals))
+                {
+                    if (goal.Remove)
+                    {
+                        //リストが変更されたので、次のフレームで再チェック
+                        _subGoals.Remove(entry.Key);
+                        return;
+                    }
+                    continue;
+                }
+                //計画策定の実行
+                Dictionary<string, int> currentState = _worldStates.GetStates();
+
+                //Planningメソッドを呼び出して計画を取得
+                Queue<IAction> plan = _planner.Planning(_actionsData.Actions.ToList(),
+                                                        goal.SubGoals,
+                                                        currentState);
+
+                if (plan != null && plan.Count > 0)
+                {
+                    //最適な計画が見つかった場合、アクションキューを更新
+                    _actionQueue = plan;
+                    bestGoal = goal;
+                    break;//最適な計画が見つかったのでループを抜ける
+                }
+            }
+        }
+
+        // 3. アクションキューからアクションを実行
+        if (_actionQueue.Count > 0)
+        {
+            if (_currentAction == null)
+            {
+                //次のアクションを取得
+                _currentAction = _actionQueue.Dequeue();
+            }
+
+            //アクションの前提条件を確認
+            if (_currentAction.CheckPrecondition(this))
+            {
+                bool success = _currentAction.Perform(this);
+                if (success)
+                {
+                    _currentAction = null; //アクション完了後にリセット
+                }
+                else
+                {
+                    //アクションが失敗した場合、計画をリセット
+                    _actionQueue.Clear();
+                }
+            }
+            else
+            {
+                Debug.Log("アクションの前提条件が満たされていません。計画をリセットします。");
+                _actionQueue?.Clear();//計画をリセット
+                _currentAction = null;
             }
         }
     }
