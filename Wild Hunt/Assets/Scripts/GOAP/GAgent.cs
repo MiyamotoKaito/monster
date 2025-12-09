@@ -63,4 +63,9 @@ public class GAgent : MonoBehaviour
         }
         return true;
     }
+
+    public void AddSubGoal(int priority, GSubGoal goal)
+    {
+
+    }
 }
