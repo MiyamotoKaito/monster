@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: WorldStates
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: WorldStates
+  m_GUID: 91c3fb55e824b824fbb4740e754eb9ee
+  m_SerializeEntries:
+  - m_GUID: 3a64e501be2b2264387f5e10e5a2b156
+    m_Address: Assets/Data/WorldStates/WorldStateData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3c8485a6307cba43911d371b0681661
+    m_Address: Assets/Data/Monsters/Actions/DragonData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 264640824cbce8d4fa3a9b9c87fece79, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 608e56244ca1b69419984c22a72681bd, type: 2}
+    - {fileID: 11400000, guid: 3a974fefd7e924846ab3f77afa53f691, type: 2}

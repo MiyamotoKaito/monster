@@ -1,53 +1,65 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace GOAP.WorldState
+namespace GOAP.WorldStates
 {
-    /// <summary>
-    /// ワールドステートの状態を表すクラス
-    /// </summary>
-    [System.Serializable]
-    public class WorldState
-    {
-        /// <summary>ワールドステートの名前</summary>
-        public string StateName => _stateName;
-        /// <summary>ワールドステートの値</summary>
-        public int Value => _value;
-        [SerializeField]
-        [Header("ワールドステートの名前")]
-        private string _stateName;
-        [SerializeField]
-        [Header("ワールドステートの値")]
-        private int _value;
-    }
     /// <summary>
     /// ワールドステートの状態を管理するクラス
     /// </summary>
-    public class WorldStates
+    public class WorldStates : MonoBehaviour
     {
         public static WorldStates Instance;
-        public Dictionary<string, int> States => _states;
+
         [SerializeField]
-        private Dictionary<string, int> _states = new Dictionary<string, int>();
+        [Header("ワールドステートデータ")]
+        private WorldStatesData _worldStatesData;
+
+
+        private Dictionary<string, int> _worldStateDictionary = new();
+
+        private void Awake()
+        {
+            // 1. シングルトンの初期化
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            // 2. データのロードと重複チェック
+            if (_worldStatesData != null)
+            {
+                foreach (var state in _worldStatesData.WorldStates)
+                {
+                    if (!_worldStateDictionary.ContainsKey(state.Name))
+                    {
+                        _worldStateDictionary.Add(state.Name, state.Value);
+                    }
+                }
+            }
+        }
         /// <summary>
         /// ステートを持っているか判別する
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool HasState(string key)
+        public bool HasState(string name)
         {
-            return _states.ContainsKey(key);
+            return _worldStateDictionary.ContainsKey(name);
         }
         /// <summary>
         /// ステートを追加する
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="value"></param>
         public void AddState(string name, int value)
         {
-            if (!_states.ContainsKey(name))
+            if (!_worldStateDictionary.ContainsKey(name))
             {
-                _states.Add(name, value);
+                _worldStateDictionary.Add(name, value);
             }
         }
         /// <summary>
@@ -56,9 +68,9 @@ namespace GOAP.WorldState
         /// <param name="name"></param>
         public void RemoveState(string name)
         {
-            if (_states.ContainsKey(name))
+            if (_worldStateDictionary.ContainsKey(name))
             {
-                _states.Remove(name);
+                _worldStateDictionary.Remove(name);
             }
         }
         /// <summary>
@@ -68,9 +80,9 @@ namespace GOAP.WorldState
         /// <param name="value"></param>
         public void ModifyState(string name, int value)
         {
-            if (_states.ContainsKey(name))
+            if (_worldStateDictionary.ContainsKey(name))
             {
-                _states[name] += value;
+                _worldStateDictionary[name] = value;
             }
             else
             {
@@ -84,13 +96,13 @@ namespace GOAP.WorldState
         /// <param name="value"></param>
         public void SetState(string name, int value)
         {
-            if (_states.ContainsKey(name))
+            if (_worldStateDictionary.ContainsKey(name))
             {
-                _states[name] = value;
+                _worldStateDictionary[name] = value;
             }
             else
             {
-                _states.Add(name, value);
+                _worldStateDictionary.Add(name, value);
             }
         }
         /// <summary>
@@ -99,7 +111,7 @@ namespace GOAP.WorldState
         /// <returns></returns>
         public Dictionary<string, int> GetStates()
         {
-            return _states;
+            return _worldStateDictionary;
         }
     }
 }

@@ -1,21 +1,32 @@
-﻿using GOAP.WorldState;
+﻿using GOAP.WorldStates;
+using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Run : IAction
 {
     [SerializeField]
-    private string ActionName;
-    [SerializeField]
-    private int _priority;
+    private int _cost;
     [SerializeField]
     private float _speed;
 
-    public bool Effect(WorldState state)
+    public Dictionary<string, int> Preconditions => throw new System.NotImplementedException();
+
+    public Dictionary<string, int> Effects => throw new System.NotImplementedException();
+
+    public int Cost => throw new System.NotImplementedException();
+
+    public bool CheckPrecondition(GAgent agent)
     {
         throw new System.NotImplementedException();
     }
 
-    public bool PerCondition(WorldState state)
+    public bool Perform(GAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Execute(GAgent agent)
     {
         throw new System.NotImplementedException();
     }

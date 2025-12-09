@@ -1,21 +1,29 @@
-﻿using GOAP.WorldState;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Eat : IAction
 {
-    public float ED;
-
     [SerializeField]
-    private string ActionName;
+    private int _cost;
     [SerializeField]
-    private int _priority;
+    private int _;
 
-    public bool Effect(WorldState state)
+    public Dictionary<string, int> Preconditions => throw new System.NotImplementedException();
+
+    public Dictionary<string, int> Effects => throw new System.NotImplementedException();
+
+    public int Cost => throw new System.NotImplementedException();
+    public bool CheckPrecondition(GAgent agent)
     {
         throw new System.NotImplementedException();
     }
 
-    public bool PerCondition(WorldState state)
+    public bool Perform(GAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Execute(GAgent agent)
     {
         throw new System.NotImplementedException();
     }
