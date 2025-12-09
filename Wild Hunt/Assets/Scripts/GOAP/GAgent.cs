@@ -48,6 +48,14 @@ public class GAgent : MonoBehaviour
     {
         // 現在のワールドステートを取得
         Dictionary<string, int> currentState = _worldStates.GetStates();
-
+        foreach (var entry in goal)
+        {
+            //キーが存在しない、または値が異なる場合、ゴールは達成されていない
+            if (!currentState.ContainsKey(entry.Key) || currentState[entry.Key] != entry.Value)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
