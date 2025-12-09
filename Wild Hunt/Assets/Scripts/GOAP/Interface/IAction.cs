@@ -36,4 +36,6 @@ public interface IAction
     /// <param name="agent">アクションを実行するエージェント</param>
     /// <returns>アクションの完了（成功）なら true</returns>
     bool Perform(GAgent agent);
+
+    void Execute(GAgent agent);
 }
