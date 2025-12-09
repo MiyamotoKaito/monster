@@ -66,6 +66,9 @@ public class GAgent : MonoBehaviour
 
     public void AddSubGoal(int priority, GSubGoal goal)
     {
-
+        if (!_subGoals.ContainsKey(priority))
+        {
+            _subGoals.Add(priority, goal);
+        }
     }
 }
