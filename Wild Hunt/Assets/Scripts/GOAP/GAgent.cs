@@ -14,11 +14,8 @@ public class GAgent : MonoBehaviour
     [Header("アクションのデータ")]
     private MonsterActionsData _actionsData;
 
-    [SerializeField]
     private IAction _currentAction;
-    [SerializeField]
     private GSubGoal _currentGoal;
-
     private GPlanner _planner;
     private WorldStates _worldStates;
 
