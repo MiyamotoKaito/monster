@@ -36,9 +36,9 @@ public class GAgent : MonoBehaviour
 
             // 2. 優先度の高い順にゴールをチェックし、計画を試みる
             GSubGoal bestGoal = null;
-            int largestPriority = int.MinValue;
+            var sortedGoals = _subGoals.OrderByDescending(entry => entry.Key); // Key = 優先度
 
-            foreach (var entry in _subGoals)
+            foreach (var entry in sortedGoals)
             {
                 GSubGoal goal = entry.Value;
                 if (GoalAchieved(goal.SubGoals))
@@ -69,13 +69,16 @@ public class GAgent : MonoBehaviour
             }
         }
 
-        // 3. アクションキューからアクションを実行
+        // 3. アクションの実行
         if (_actionQueue.Count > 0)
         {
             if (_currentAction == null)
             {
-                //次のアクションを取得
+                // --- 修正点 1: 新しいアクションの開始 ---
                 _currentAction = _actionQueue.Dequeue();
+
+                // アクションがキューから取り出された直後に、初期設定のための Execute を一度だけ呼び出す
+                _currentAction.Execute(this);
             }
 
             //アクションの前提条件を確認
