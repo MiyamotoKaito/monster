@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using System.Runtime.CompilerServices;
 namespace GOAP.GPlanner
 {
     public static class GPlanner
     {
         public static Queue<IAction> Planning(List<IAction> actions,
                                        Dictionary<string, int> goal,
-                                       Dictionary<string, int> currntState)
+                                       Dictionary<string, int> currentState)
         {
             //利用可能なアクションのリスト
             List<IAction> usableActions = new List<IAction>();
@@ -20,7 +21,7 @@ namespace GOAP.GPlanner
             //グラフ構築に必要なリスト
             List<GNode> leaves = new List<GNode>();//グラフ構築で達成した「葉」ノード(計算パスの最終候補)
             //最初のノード
-            GNode start = new GNode(null, 0, currntState, null);
+            GNode start = new GNode(null, 0, currentState, null);
 
             //A*アルゴリズムでグラフを構築し、最もコストの低いゴールパスを見つける
             if (BuildGraph(start, leaves, usableActions, goal))
@@ -174,5 +175,25 @@ namespace GOAP.GPlanner
             path.Reverse();//リストを逆にして、正規の実行順序にする
             return new Queue<IAction>(path);
         }
+    }
+
+    class test
+    {
+        public test()
+        {
+            d = new data();
+        }
+
+        public data d;
+    }
+
+    class data
+    {
+        public data()
+        {
+            t = new test();
+        }
+
+        public test t;
     }
 }
