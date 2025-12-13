@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEngine;
 namespace GOAP.GPlanner
 {
-    public class GPlanner : MonoBehaviour
+    public static class GPlanner
     {
-        public Queue<IAction> Planning(List<IAction> actions,
+        public static Queue<IAction> Planning(List<IAction> actions,
                                        Dictionary<string, int> goal,
                                        Dictionary<string, int> currntState)
         {
@@ -14,7 +14,6 @@ namespace GOAP.GPlanner
             //利用可能なアクションをフィルタリングする
             foreach (var action in actions)
             {
-                //※修正
                 //アクションが現在のワールドステートで実行可能かの確認を行う処理を追加しないといけない
                 usableActions.Add(action);
             }
@@ -50,7 +49,7 @@ namespace GOAP.GPlanner
         /// <param name="usableAction"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
-        private bool BuildGraph(GNode parent,
+        private static bool BuildGraph(GNode parent,
             List<GNode> leaves,
             List<IAction> usableAction,
             Dictionary<string, int> goal)
@@ -102,7 +101,7 @@ namespace GOAP.GPlanner
         /// <param name="goal"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        private bool CanGoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> state)
+        private static bool CanGoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> state)
         {
             foreach (var g in goal)
             {
@@ -125,7 +124,7 @@ namespace GOAP.GPlanner
         /// <param name="preconditions"></param>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        private bool CheckPreconditions(Dictionary<string, int> preconditions, Dictionary<string, int> currentState)
+        private static bool CheckPreconditions(Dictionary<string, int> preconditions, Dictionary<string, int> currentState)
         {
             foreach (var pre in preconditions)
             {
@@ -144,7 +143,7 @@ namespace GOAP.GPlanner
         /// <param name="currentState"></param>
         /// <param name="effects"></param>
         /// <returns></returns>
-        private Dictionary<string, int> CreateNewState(Dictionary<string, int> currentState, Dictionary<string, int> effects)
+        private static Dictionary<string, int> CreateNewState(Dictionary<string, int> currentState, Dictionary<string, int> effects)
         {
             //現在のステートのコピーを作る
             Dictionary<string, int> newState = new(currentState);
@@ -161,7 +160,7 @@ namespace GOAP.GPlanner
         /// </summary>
         /// <param name="cheapestGoalNode"></param>
         /// <returns></returns>
-        private Queue<IAction> ReconstructPath(GNode cheapestGoalNode)
+        private static Queue<IAction> ReconstructPath(GNode cheapestGoalNode)
         {
             List<IAction> path = new List<IAction>();
             GNode current = cheapestGoalNode;

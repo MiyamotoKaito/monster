@@ -17,12 +17,10 @@ public class GAgent : MonoBehaviour
 
     private IAction _currentAction;
     private GSubGoal _currentGoal;
-    private GPlanner _planner;
     private WorldStates _worldStates;
 
     private void Start()
     {
-        _planner = GetComponent<GPlanner>();
         _worldStates = WorldStates.Instance;
     }
 
@@ -55,7 +53,7 @@ public class GAgent : MonoBehaviour
                 Dictionary<string, int> currentState = _worldStates.GetStates();
 
                 //Planningメソッドを呼び出して計画を取得
-                Queue<IAction> plan = _planner.Planning(_actionsData.Actions.ToList(),
+                Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(),
                                                         goal.SubGoals,
                                                         currentState);
 
