@@ -34,8 +34,10 @@ public class MoveToTarget : IAction
             _target = targetobj.transform;
             _isMoving = true;
         }
-
-        _isMoving = false;
+        else
+        {
+            _isMoving = false;
+        }
     }
 
     public bool Perform(GAgent agent)
@@ -45,7 +47,7 @@ public class MoveToTarget : IAction
         float distance = Vector3.Distance(agent.transform.position, _target.position);
         if (distance <= _stopDistance)
         {
-            Debug.Log($"{GetType().Name}" + "アクション完了");
+            Debug.Log($"{GetType().Name}アクション完了");
             return true;
         }
         //移動
