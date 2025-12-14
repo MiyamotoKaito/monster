@@ -25,4 +25,13 @@ public class SurvivalStats : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// このサブゴールが達成されたときに呼ぶ関数
+    /// ゴールの削除は達成時にRemoveされるので書かなくて良い
+    /// </summary>
+    public void OnFed()
+    {
+        _isHungerGoalActivte = false;
+        _timer = 0;
+    }
 }
