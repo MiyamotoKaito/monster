@@ -9,7 +9,7 @@ public class SurvivalStats : MonoBehaviour
     /// <summary>サブゴールを追加するためのGAgent</summary>
     private GAgent _agent;
     /// <summary>目標を追加するかどうか</summary>
-    private bool _isHungerGoalActivte = false;
+    private bool _isHungerGoalActive = false;
     private float _timer;
     private void Update()
     {
@@ -17,11 +17,11 @@ public class SurvivalStats : MonoBehaviour
         _timer += Time.deltaTime;
         if (_hunger > _timer)
         {
-            if (!_isHungerGoalActivte)
+            if (!_isHungerGoalActive)
             {
                 GSubGoal eatGoal = new GSubGoal("IsFull", 10, true);
                 _agent.AddSubGoal(10, eatGoal);
-                _isHungerGoalActivte = true;
+                _isHungerGoalActive = true;
             }
         }
     }
@@ -31,7 +31,7 @@ public class SurvivalStats : MonoBehaviour
     /// </summary>
     public void OnFed()
     {
-        _isHungerGoalActivte = false;
+        _isHungerGoalActive = false;
         _timer = 0;
     }
 }
