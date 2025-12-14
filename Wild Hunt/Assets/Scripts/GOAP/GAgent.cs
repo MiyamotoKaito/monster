@@ -72,7 +72,7 @@ public class GAgent : MonoBehaviour
         {
             if (_currentAction == null)
             {
-                // --- 修正点 1: 新しいアクションの開始 ---
+                // 新しいアクションの開始 
                 _currentAction = _actionQueue.Dequeue();
 
                 // アクションがキューから取り出された直後に、初期設定のための Execute を一度だけ呼び出す
