@@ -85,6 +85,7 @@ public class GAgent : MonoBehaviour
                 bool success = _currentAction.Perform(this);
                 if (success)
                 {
+                    ApplyEffect(_currentAction.Effects);
                     _currentAction = null; //アクション完了後にリセット
                 }
                 else
@@ -131,6 +132,18 @@ public class GAgent : MonoBehaviour
         else
         {
             Debug.LogWarning($"ゴールの優先度 {priority} は既に存在します。");
+        }
+    }
+    /// <summary>
+    /// アクションの効果を実際のワールドステートに適応する
+    /// </summary>
+    /// <param name="effect"></param>
+    private void ApplyEffect(Dictionary<string, int> effect)
+    {
+        foreach (var entry in effect)
+        {
+            //ワールドステートの値を変更
+            _worldStates.ModifyState(entry.Key, entry.Value);
         }
     }
 }
