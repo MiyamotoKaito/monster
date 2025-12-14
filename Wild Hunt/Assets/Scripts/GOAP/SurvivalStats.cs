@@ -19,6 +19,7 @@ public class SurvivalStats : MonoBehaviour
         {
             if (!_isHungerGoalActive)
             {
+                Debug.Log($"{_hunger}サブゴール追加");
                 GSubGoal eatGoal = new GSubGoal("IsFull", 10, true);
                 _agent.AddSubGoal(10, eatGoal);
                 _isHungerGoalActive = true;
