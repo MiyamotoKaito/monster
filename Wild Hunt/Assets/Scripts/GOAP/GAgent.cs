@@ -17,12 +17,10 @@ public class GAgent : MonoBehaviour
 
     private IAction _currentAction;
     private GSubGoal _currentGoal;
-    private GPlanner _planner;
     private WorldStates _worldStates;
 
     private void Start()
     {
-        _planner = GetComponent<GPlanner>();
         _worldStates = WorldStates.Instance;
     }
 
@@ -55,7 +53,7 @@ public class GAgent : MonoBehaviour
                 Dictionary<string, int> currentState = _worldStates.GetStates();
 
                 //Planningメソッドを呼び出して計画を取得
-                Queue<IAction> plan = _planner.Planning(_actionsData.Actions.ToList(),
+                Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(),
                                                         goal.SubGoals,
                                                         currentState);
 
@@ -74,7 +72,7 @@ public class GAgent : MonoBehaviour
         {
             if (_currentAction == null)
             {
-                // --- 修正点 1: 新しいアクションの開始 ---
+                // 新しいアクションの開始 
                 _currentAction = _actionQueue.Dequeue();
 
                 // アクションがキューから取り出された直後に、初期設定のための Execute を一度だけ呼び出す
@@ -87,6 +85,7 @@ public class GAgent : MonoBehaviour
                 bool success = _currentAction.Perform(this);
                 if (success)
                 {
+                    ApplyEffect(_currentAction.Effects);
                     _currentAction = null; //アクション完了後にリセット
                 }
                 else
@@ -133,6 +132,18 @@ public class GAgent : MonoBehaviour
         else
         {
             Debug.LogWarning($"ゴールの優先度 {priority} は既に存在します。");
+        }
+    }
+    /// <summary>
+    /// アクションの効果を実際のワールドステートに適応する
+    /// </summary>
+    /// <param name="effect"></param>
+    private void ApplyEffect(Dictionary<string, int> effect)
+    {
+        foreach (var entry in effect)
+        {
+            //ワールドステートの値を変更
+            _worldStates.ModifyState(entry.Key, entry.Value);
         }
     }
 }
