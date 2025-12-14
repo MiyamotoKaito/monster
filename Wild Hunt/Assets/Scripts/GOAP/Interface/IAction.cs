@@ -37,5 +37,9 @@ public interface IAction
     /// <returns>アクションの完了（成功）なら true</returns>
     bool Perform(GAgent agent);
 
+    /// <summary>
+    /// アクションQueueから取り出されたときに一度だけ呼ばれる関数
+    /// </summary>
+    /// <param name="agent"></param>
     void Execute(GAgent agent);
 }
