@@ -15,7 +15,7 @@ public class SurvivalStats : MonoBehaviour
     {
         //お腹が常に減っていく
         _timer += Time.deltaTime;
-        if (_hunger > _timer)
+        if (_hunger < _timer)
         {
             if (!_isHungerGoalActive)
             {
