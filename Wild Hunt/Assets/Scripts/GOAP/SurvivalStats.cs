@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class SurvivalStats : MonoBehaviour
 {
@@ -9,6 +10,19 @@ public class SurvivalStats : MonoBehaviour
     private GAgent _agent;
     /// <summary>目標を追加するかどうか</summary>
     private bool _isHungerGoalActivte = false;
-
-
+    private float _timer;
+    private void Update()
+    {
+        //お腹が常に減っていく
+        _timer += Time.deltaTime;
+        if (_hunger > _timer)
+        {
+            if (!_isHungerGoalActivte)
+            {
+                GSubGoal eatGoal = new GSubGoal("IsFull", 10, true);
+                _agent.AddSubGoal(10, eatGoal);
+                _isHungerGoalActivte = true;
+            }
+        }
+    }
 }
