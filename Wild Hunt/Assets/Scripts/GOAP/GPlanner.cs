@@ -176,24 +176,4 @@ namespace GOAP.GPlanner
             return new Queue<IAction>(path);
         }
     }
-
-    class test
-    {
-        public test()
-        {
-            d = new data();
-        }
-
-        public data d;
-    }
-
-    class data
-    {
-        public data()
-        {
-            t = new test();
-        }
-
-        public test t;
-    }
 }

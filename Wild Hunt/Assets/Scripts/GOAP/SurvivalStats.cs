@@ -11,6 +11,7 @@ public class SurvivalStats : MonoBehaviour
     /// <summary>目標を追加するかどうか</summary>
     private bool _isHungerGoalActive = false;
     private float _timer;
+    private Transform _target;
     private void Start()
     {
         _agent = GetComponent<GAgent>();
