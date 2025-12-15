@@ -21,4 +21,4 @@ MonoBehaviour:
       type: {class: Hunger, ns: , asm: Assembly-CSharp}
       data:
         _name: Hunger
-        _value: 100
+        _value: 1
