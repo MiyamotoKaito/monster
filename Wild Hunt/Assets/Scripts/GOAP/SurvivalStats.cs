@@ -11,6 +11,10 @@ public class SurvivalStats : MonoBehaviour
     /// <summary>目標を追加するかどうか</summary>
     private bool _isHungerGoalActive = false;
     private float _timer;
+    private void Start()
+    {
+        _agent = GetComponent<GAgent>();
+    }
     private void Update()
     {
         //お腹が常に減っていく
