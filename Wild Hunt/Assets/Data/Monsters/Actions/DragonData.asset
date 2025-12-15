@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180e33c056eef124392d2e24585f6437, type: 3}
   m_Name: DragonData
   m_EditorClassIdentifier: Assembly-CSharp::MonsterActionsData
-  _acitons:
-  - rid: 8992580478063870146
-  - rid: 8992580478063870171
+  _actions:
+  - rid: 8992580478063870183
+  - rid: 8992580478063870184
   references:
     version: 2
     RefIds:
-    - rid: 8992580478063870146
+    - rid: 8992580478063870183
       type: {class: MoveToTarget, ns: , asm: Assembly-CSharp}
       data:
-        _cost: 5
-        _speed: 5
-        _stopDistance: 0.1
-    - rid: 8992580478063870171
+        _cost: 0
+        _speed: 0
+        _stopDistance: 0
+    - rid: 8992580478063870184
       type: {class: Eat, ns: , asm: Assembly-CSharp}
       data:
-        _cost: 4
+        _cost: 0
