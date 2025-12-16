@@ -126,8 +126,8 @@ namespace GOAP.WorldStates
         /// <returns></returns>
         public Dictionary<string, int> GetStates()
         {
-            Debug.Log("GetStates called");
-            return _worldStateDictionary;
+            // 常にコピーを返すようにして、プランナーが元の値を壊さないようにする
+            return new Dictionary<string, int>(_worldStateDictionary);
         }
     }
 }
