@@ -11,6 +11,11 @@ public class SurvivalStats : MonoBehaviour
     /// <summary>目標を追加するかどうか</summary>
     private bool _isHungerGoalActive = false;
     private float _timer;
+    private Transform _target;
+    private void Start()
+    {
+        _agent = GetComponent<GAgent>();
+    }
     private void Update()
     {
         //お腹が常に減っていく
@@ -19,6 +24,7 @@ public class SurvivalStats : MonoBehaviour
         {
             if (!_isHungerGoalActive)
             {
+                Debug.Log($"{_hunger}サブゴール追加");
                 GSubGoal eatGoal = new GSubGoal("IsFull", 10, true);
                 _agent.AddSubGoal(10, eatGoal);
                 _isHungerGoalActive = true;

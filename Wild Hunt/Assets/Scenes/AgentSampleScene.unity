@@ -676,7 +676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9034908a08c9a04ab7692d78a4563a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GOAP.WorldStates.WorldStates
-  _worldStatesData: {fileID: 11400000, guid: 3a64e501be2b2264387f5e10e5a2b156, type: 2}
+  _worldState:
+  - _worldName: AtTarget
+    _value: 0
+  - _worldName: IsFull
+    _value: 0
+  - _worldName: HasTarget
+    _value: 0
 --- !u!4 &463815956
 Transform:
   m_ObjectHideFlags: 0
@@ -1739,13 +1745,14 @@ GameObject:
   - component: {fileID: 2104015382}
   - component: {fileID: 2104015381}
   - component: {fileID: 2104015383}
+  - component: {fileID: 2104015384}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &2104015377
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1848,7 +1855,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104015376}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48432358c28883b40bcb1659e17ae1b6, type: 3}
   m_Name: 
@@ -1862,7 +1869,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104015376}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25850f2becbd66c41ac98fc412bdb5e6, type: 3}
   m_Name: 
@@ -1881,7 +1888,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a8c4ccb87d60345a5d09e2a3dffc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GAgent
-  _actionsData: {fileID: 0}
+  _actionsData: {fileID: 11400000, guid: f3c8485a6307cba43911d371b0681661, type: 2}
+--- !u!114 &2104015384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104015376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268a499abdb870140961989ef9ecd290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SurvivalStats
+  _hunger: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

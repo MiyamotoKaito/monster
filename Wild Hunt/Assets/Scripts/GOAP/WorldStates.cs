@@ -9,11 +9,8 @@ namespace GOAP.WorldStates
     public class WorldStates : MonoBehaviour
     {
         public static WorldStates Instance;
-
         [SerializeField]
-        [Header("ワールドステートデータ")]
-        private WorldStatesData _worldStatesData;
-
+        private List<WorldState> _worldState;
 
         private Dictionary<string, int> _worldStateDictionary = new();
 
@@ -31,14 +28,11 @@ namespace GOAP.WorldStates
             }
 
             // 2. データのロードと重複チェック
-            if (_worldStatesData != null)
+            if (_worldState != null)
             {
-                foreach (var state in _worldStatesData.WorldStates)
+                foreach (var state in _worldState)
                 {
-                    if (!_worldStateDictionary.ContainsKey(state.Name))
-                    {
-                        _worldStateDictionary.Add(state.Name, state.Value);
-                    }
+                    _worldStateDictionary.Add(state.WorldName, state.Value);
                 }
             }
         }

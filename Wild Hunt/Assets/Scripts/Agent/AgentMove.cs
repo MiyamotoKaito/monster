@@ -1,16 +1,14 @@
-using System.Runtime.CompilerServices;
-using UnityEngine;
-using UnityEngine.Rendering;
+ï»¿using UnityEngine;
 
 public class AgentMove : MonoBehaviour
 {
-    /// <summary>ˆÚ“®‘¬“x</summary>
+    /// <summary>ç§»å‹•é€Ÿåº¦</summary>
     [SerializeField, Header("Speed")]
     private float _speed;
-    /// <summary>–Ú“I’n‚©‚ç~‚Ü‚é‚Ü‚Å‚Ì‹——£</summary>
+    /// <summary>ç›®çš„åœ°ã‹ã‚‰æ­¢ã¾ã‚‹ã¾ã§ã®è·é›¢</summary>
     [SerializeField, Header("StoppedDistance")]
     private float _distance;
-    /// <summary>Œ»İ‚Ìƒ|ƒWƒVƒ‡ƒ“‚Ì”z—ñ‚Ì”Ô†</summary>
+    /// <summary>ç¾åœ¨ã®ãƒã‚¸ã‚·ãƒ§ãƒ³ã®é…åˆ—ã®ç•ªå·</summary>
     private int _currentPosIndex = 0;
 
     private FindPath _findPath;

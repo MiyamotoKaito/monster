@@ -3,28 +3,33 @@ using UnityEngine;
 
 public class Eat : IAction
 {
+    public Dictionary<string, int> Preconditions => new Dictionary<string, int>() { { "AtTarget", 1 } };
+
+    public Dictionary<string, int> Effects => new Dictionary<string, int>() { { "IsFull", 1 }, { "HasTarget", 0 } };
+
+    public int Cost => _cost;
+
     [SerializeField]
     private int _cost;
-    [SerializeField]
-    private int _;
+    private Transform _target;
 
-    public Dictionary<string, int> Preconditions => throw new System.NotImplementedException();
-
-    public Dictionary<string, int> Effects => throw new System.NotImplementedException();
-
-    public int Cost => throw new System.NotImplementedException();
+    private bool _eat = false;
     public bool CheckPrecondition(GAgent agent)
     {
-        throw new System.NotImplementedException();
+        return _target != null;
     }
 
     public bool Perform(GAgent agent)
     {
-        throw new System.NotImplementedException();
+        if (!_eat) return false;
+
+
+        //targetObjをどうにかして消す()
+        return true;
     }
 
     public void Execute(GAgent agent)
     {
-        throw new System.NotImplementedException();
+        _eat = true;
     }
 }
