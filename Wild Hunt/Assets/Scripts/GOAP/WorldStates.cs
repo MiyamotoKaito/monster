@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace GOAP.WorldStates
 {
+    [System.Serializable]
+    public class WorldState
+    {
+        public string WorldName;
+        public int Value;
+    }
     /// <summary>
     /// ワールドステートの状態を管理するクラス
     /// </summary>
@@ -43,6 +49,7 @@ namespace GOAP.WorldStates
         /// <returns></returns>
         public bool HasState(string name)
         {
+            Debug.Log($"HasState: {name} = {_worldStateDictionary.ContainsKey(name)}");
             return _worldStateDictionary.ContainsKey(name);
         }
         /// <summary>
@@ -53,7 +60,12 @@ namespace GOAP.WorldStates
         {
             if (!_worldStateDictionary.ContainsKey(name))
             {
+                Debug.Log($"AddState: {name} = {value}");
                 _worldStateDictionary.Add(name, value);
+            }
+            else
+            {
+                Debug.LogWarning($"State '{name}' already exists. Use ModifyState or SetState to change its value.");
             }
         }
         /// <summary>
@@ -65,6 +77,11 @@ namespace GOAP.WorldStates
             if (_worldStateDictionary.ContainsKey(name))
             {
                 _worldStateDictionary.Remove(name);
+                Debug.Log($"RemoveState: {name}");
+            }
+            else
+            {
+                Debug.LogWarning($"State '{name}' does not exist. Cannot remove.");
             }
         }
         /// <summary>
@@ -77,10 +94,12 @@ namespace GOAP.WorldStates
             if (_worldStateDictionary.ContainsKey(name))
             {
                 _worldStateDictionary[name] = value;
+                Debug.Log($"ModifyState: {name} = {value}");
             }
             else
             {
                 AddState(name, value);
+                Debug.Log($"State '{name}' did not exist. Added with value {value}.");
             }
         }
         /// <summary>
@@ -93,10 +112,12 @@ namespace GOAP.WorldStates
             if (_worldStateDictionary.ContainsKey(name))
             {
                 _worldStateDictionary[name] = value;
+                Debug.Log($"SetState: {name} = {value}");
             }
             else
             {
                 _worldStateDictionary.Add(name, value);
+                Debug.Log($"State '{name}' did not exist. Added with value {value}.");
             }
         }
         /// <summary>
@@ -105,6 +126,7 @@ namespace GOAP.WorldStates
         /// <returns></returns>
         public Dictionary<string, int> GetStates()
         {
+            Debug.Log("GetStates called");
             return _worldStateDictionary;
         }
     }

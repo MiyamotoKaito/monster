@@ -11,6 +11,8 @@ public class Eat : IAction
 
     [SerializeField]
     private int _cost;
+    [SerializeField]
+    private string _targetTag;
     private Transform _target;
 
     private bool _eat = false;
@@ -21,15 +23,24 @@ public class Eat : IAction
 
     public bool Perform(GAgent agent)
     {
-        if (!_eat) return false;
+        if (!_eat || _target == null) return false;
 
-
+        Debug.Log("EAT");
         //targetObjをどうにかして消す()
         return true;
     }
 
     public void Execute(GAgent agent)
     {
-        _eat = true;
+        GameObject targetobj = GameObject.FindGameObjectWithTag(_targetTag);
+        if (targetobj != null)
+        {
+            _target = targetobj.transform;
+            _eat = true;
+        }
+        else
+        {
+            _eat = false;
+        }
     }
 }
