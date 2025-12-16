@@ -5,7 +5,7 @@ public class Eat : IAction
 {
     public Dictionary<string, int> Preconditions => new Dictionary<string, int>() { { "AtTarget", 1 } };
 
-    public Dictionary<string, int> Effects => new Dictionary<string, int>() { { "IsFull", 1 }, { "HasTarget", 0 } };
+    public Dictionary<string, int> Effects => new Dictionary<string, int>() { { "IsFull", 10 }, { "HasTarget", 0 } };
 
     public int Cost => _cost;
 
@@ -23,11 +23,18 @@ public class Eat : IAction
 
     public bool Perform(GAgent agent)
     {
-        if (!_eat || _target == null) return false;
+        // ターゲットが消滅していたら失敗
+        if (_target == null) return false;
 
-        Debug.Log("EAT");
-        //targetObjをどうにかして消す()
-        return true;
+        Debug.Log("EAT: 食べました");
+
+        // SurvivalStatsに通知して空腹タイマーをリセット
+        agent.GetComponent<SurvivalStats>().OnFed();
+
+        // 食べ物を消去
+        GameObject.Destroy(_target.gameObject);
+
+        return true; // 完了
     }
 
     public void Execute(GAgent agent)
