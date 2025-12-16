@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 namespace GOAP.GPlanner
 {
     public static class GPlanner
@@ -17,6 +16,7 @@ namespace GOAP.GPlanner
             {
                 //アクションが現在のワールドステートで実行可能かの確認を行う処理を追加しないといけない
                 usableActions.Add(action);
+                Debug.WriteLine($"Usable Action: {action.GetType().Name}");
             }
             //グラフ構築に必要なリスト
             List<GNode> leaves = new List<GNode>();//グラフ構築で達成した「葉」ノード(計算パスの最終候補)
@@ -33,13 +33,16 @@ namespace GOAP.GPlanner
                     if (leaf == null || leaf.Cost < cheapest.Cost)
                     {
                         cheapest = leaf;
+                        Debug.WriteLine($"Cheapest Action: {leaf.Action.GetType().Name} with cost {leaf.Cost}");
                     }
                 }
                 //最適パスを再構築して返す
+                Debug.WriteLine("Reconstructing Path...");
                 return ReconstructPath(cheapest);
             }
 
             //ゴールを達成できなかった場合はnullを返す
+            Debug.WriteLine("No Plan Found.");
             return null;
         }
         /// <summary>
@@ -63,6 +66,7 @@ namespace GOAP.GPlanner
                 // 1. アクションの前提条件が親ノードのステートで満たされているかを確認
                 if (CheckPreconditions(act.Preconditions, parent.State))
                 {
+                    Debug.WriteLine($"Action {act.GetType().Name} can be performed.");
                     // 2. 新しい状態のシミュレーション
                     // 親ノードの状態にアクションの効果を適用した新しいワールドステートの辞書作成
                     Dictionary<string, int> newState = CreateNewState(parent.State, act.Effects);
@@ -76,6 +80,7 @@ namespace GOAP.GPlanner
                     if (CanGoalAchieved(goal, newState))
                     {
                         //ゴール達成可能なノードをleavesに追加
+                        Debug.WriteLine($"Goal Achieved with Action {act.GetType().Name}!");
                         leaves.Add(newNode);
                         foundPath = true;//パスが見つかった
                     }
@@ -83,16 +88,19 @@ namespace GOAP.GPlanner
                     {
                         // 5. 引数に渡されたアクションをのぞいた残りのアクションで次のノードを探す
                         //　新しいリストを作成し、現在のアクションを一時的に除外
+                        Debug.WriteLine($"Goal not yet achieved. Continuing with Action {act.GetType().Name}.");
                         List<IAction> subset = usableAction.Except(new[] { act }).ToList();
 
                         // 再帰呼び出し: 新しいノードを親として、サブセットのアクションでグラフを構築
                         if (BuildGraph(newNode, leaves, subset, goal))
                         {
+                            Debug.WriteLine($"Path found through Action {act.GetType().Name}.");
                             foundPath = true;
                         }
                     }
                 }
             }
+            Debug.WriteLine("BuildGraph completed for current parent node.");
             return foundPath;
         }
 
@@ -110,13 +118,16 @@ namespace GOAP.GPlanner
                 //もしくはゴールの値が0で‘Remove’の場合を考慮
                 if (state.ContainsKey(g.Key) && state[g.Key] == g.Value)
                 {
+                    Debug.WriteLine($"Goal condition {g.Key}={g.Value} met in state.");
                     continue;
                 }
                 else
                 {
+                    Debug.WriteLine($"Goal condition {g.Key}={g.Value} NOT met in state.");
                     return false;
                 }
             }
+            Debug.WriteLine("All goal conditions met in state.");
             return true;
         }
         /// <summary>
@@ -132,9 +143,11 @@ namespace GOAP.GPlanner
                 //アクションの前提条件に必要なステートのキーか値がアクションが要求する値と一致しているかチェックする
                 if (!currentState.ContainsKey(pre.Key) || currentState[pre.Key] != pre.Value)
                 {
+                    Debug.WriteLine($"Precondition {pre.Key}={pre.Value} NOT met in current state.");
                     return false;
                 }
             }
+            Debug.WriteLine("All preconditions met in current state.");
             return true;
         }
 
@@ -152,8 +165,10 @@ namespace GOAP.GPlanner
             //アクションの効果を適応し、ステートを上書き/保存
             foreach (var effect in effects)
             {
+                Debug.WriteLine($"Applying effect {effect.Key}={effect.Value} to new state.");
                 newState[effect.Key] = effect.Value;
             }
+            Debug.WriteLine("New state created after applying effects.");
             return newState;
         }
         /// <summary>
@@ -169,9 +184,11 @@ namespace GOAP.GPlanner
             //スタートノードにたどり着くまで子から親をたどる
             while (current.Action != null)
             {
+                Debug.WriteLine($"Reconstructing path, adding Action: {current.Action.GetType().Name}");
                 path.Add(current.Action);
                 current = current.Parent;
             }
+            Debug.WriteLine("Path reconstruction completed.");
             path.Reverse();//リストを逆にして、正規の実行順序にする
             return new Queue<IAction>(path);
         }
