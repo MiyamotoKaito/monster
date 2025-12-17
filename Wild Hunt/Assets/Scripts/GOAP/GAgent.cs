@@ -6,9 +6,7 @@ using System.Linq;
 
 public class GAgent : MonoBehaviour
 {
-    /// <summary>サブゴールと優先度の辞書<summary>
     private Dictionary<int, GSubGoal> _subGoals = new();
-    /// <summary>ソートされたアクションのQueue<summary>
     private Queue<IAction> _actionQueue = new();
 
     [SerializeField]
@@ -16,8 +14,11 @@ public class GAgent : MonoBehaviour
     private MonsterActionsData _actionsData;
 
     private IAction _currentAction;
-    private GSubGoal _currentGoal;
     private WorldStates _worldStates;
+
+    // 計画再計算のためのクールダウン
+    private float _planningTimer = 0f;
+    private float _planningInterval = 0.2f;
 
     private void Start()
     {
@@ -26,95 +27,65 @@ public class GAgent : MonoBehaviour
 
     private void LateUpdate()
     {
-        // 1. ゴール達成済み、またはアクションキューがない場合は、新しい計画を立てる
-        if (_actionQueue.Count == 0 || _currentGoal == null)
+        if (_currentAction != null || _actionQueue.Count > 0)
         {
-            //アクションをリセット
-            _currentAction = null;
+            _planningTimer = 0f;
 
-            // 2. 優先度の高い順にゴールをチェックし、計画を試みる
-            GSubGoal bestGoal = null;
-            var sortedGoals = _subGoals.OrderByDescending(entry => entry.Key); // Key = 優先度
-
-            foreach (var entry in sortedGoals)
-            {
-                GSubGoal goal = entry.Value;
-                if (GoalAchieved(goal.SubGoals))
-                {
-                    if (goal.Remove)
-                    {
-                        //リストが変更されたので、次のフレームで再チェック
-                        _subGoals.Remove(entry.Key);
-                        return;
-                    }
-                    continue;
-                }
-                //計画策定の実行
-                Dictionary<string, int> currentState = _worldStates.GetStates();
-
-                //Planningメソッドを呼び出して計画を取得
-                Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(),
-                                                        goal.SubGoals,
-                                                        currentState);
-
-                if (plan != null && plan.Count > 0)
-                {
-                    //最適な計画が見つかった場合、アクションキューを更新
-                    _actionQueue = plan;
-                    bestGoal = goal;
-                    break;//最適な計画が見つかったのでループを抜ける
-                }
-            }
-        }
-
-        // 3. アクションの実行
-        if (_actionQueue.Count > 0)
-        {
             if (_currentAction == null)
             {
-                // 新しいアクションの開始 
                 _currentAction = _actionQueue.Dequeue();
-
-                // アクションがキューから取り出された直後に、初期設定のための Execute を一度だけ呼び出す
+                Debug.Log($"<color=yellow>[GAgent] 次のアクション開始: {_currentAction.GetType().Name}</color>");
                 _currentAction.Execute(this);
             }
 
-            //アクションの前提条件を確認
-            if (_currentAction.CheckPrecondition(this))
+            // 前提条件チェック
+            if (!_currentAction.CheckPrecondition(this))
             {
-                bool success = _currentAction.Perform(this);
-                if (success)
-                {
-                    ApplyEffect(_currentAction.Effects);
-                    _currentAction = null; //アクション完了後にリセット
-                }
-                else
-                {
-                    //アクションが失敗した場合、計画をリセット
-                    _actionQueue.Clear();
-                }
-            }
-            else
-            {
-                Debug.Log("アクションの前提条件が満たされていません。計画をリセットします。");
-                _actionQueue?.Clear();//計画をリセット
+                Debug.LogError($"[GAgent] 実行エラー: {_currentAction.GetType().Name} の前提条件が実行中に崩れました。計画を破棄します。");
+                _actionQueue.Clear();
                 _currentAction = null;
+                return;
+            }
+
+            // Performの実行
+            if (_currentAction.Perform(this))
+            {
+                Debug.Log($"<color=lime>[GAgent] アクション完了: {_currentAction.GetType().Name}</color>");
+                ApplyEffect(_currentAction.Effects);
+                _currentAction = null;
+            }
+            return;
+        }
+
+        // プランニング処理
+        _planningTimer += Time.deltaTime;
+        if (_planningTimer < _planningInterval) return;
+        _planningTimer = 0f;
+
+        Dictionary<string, int> currentState = _worldStates.GetStates();
+        var sortedGoals = _subGoals.OrderByDescending(entry => entry.Key).ToList();
+
+        foreach (var entry in sortedGoals)
+        {
+            if (GoalAchieved(entry.Value.SubGoals, currentState)) continue;
+
+            Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(), entry.Value.SubGoals, currentState);
+
+            if (plan != null && plan.Count > 0)
+            {
+                _actionQueue = plan;
+                Debug.Log("[GAgent] 新しい計画を採用しました。実行フェーズに移行します。");
+                break;
             }
         }
     }
 
-    /// <summary>
-    /// ゴールが現在のワールドステートで達成されているか確認する
-    /// </summary>
-    /// <param name="goal"></param>
-    /// <returns></returns>
-    private bool GoalAchieved(Dictionary<string, int> goal)
+    // --- 以下、ヘルパーメソッド ---
+
+    private bool GoalAchieved(Dictionary<string, int> goal, Dictionary<string, int> currentState)
     {
-        // 現在のワールドステートを取得
-        Dictionary<string, int> currentState = _worldStates.GetStates();
         foreach (var entry in goal)
         {
-            //キーが存在しない、または値が異なる場合、ゴールは達成されていない
             if (!currentState.ContainsKey(entry.Key) || currentState[entry.Key] != entry.Value)
             {
                 return false;
@@ -129,20 +100,12 @@ public class GAgent : MonoBehaviour
         {
             _subGoals.Add(priority, goal);
         }
-        else
-        {
-            Debug.LogWarning($"ゴールの優先度 {priority} は既に存在します。");
-        }
     }
-    /// <summary>
-    /// アクションの効果を実際のワールドステートに適応する
-    /// </summary>
-    /// <param name="effect"></param>
+
     private void ApplyEffect(Dictionary<string, int> effect)
     {
         foreach (var entry in effect)
         {
-            //ワールドステートの値を変更
             _worldStates.ModifyState(entry.Key, entry.Value);
         }
     }

@@ -15,16 +15,23 @@ MonoBehaviour:
   _actions:
   - rid: 8992580478063870183
   - rid: 8992580478063870184
+  - rid: 8072880820211679297
   references:
     version: 2
     RefIds:
+    - rid: 8072880820211679297
+      type: {class: SetTarget, ns: , asm: Assembly-CSharp}
+      data:
+        _cost: 1
     - rid: 8992580478063870183
       type: {class: MoveToTarget, ns: , asm: Assembly-CSharp}
       data:
-        _cost: 0
-        _speed: 0
-        _stopDistance: 0
+        _cost: 1
+        _speed: 5
+        _stopDistance: 2
+        _targetTag: Food
     - rid: 8992580478063870184
       type: {class: Eat, ns: , asm: Assembly-CSharp}
       data:
-        _cost: 0
+        _cost: 1
+        _targetTag: Food

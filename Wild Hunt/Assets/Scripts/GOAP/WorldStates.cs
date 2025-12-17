@@ -15,6 +15,7 @@ namespace GOAP.WorldStates
     public class WorldStates : MonoBehaviour
     {
         public static WorldStates Instance;
+        public Dictionary<string, int> WorldStateDictionary => _worldStateDictionary;
         [SerializeField]
         private List<WorldState> _worldState;
 
@@ -126,8 +127,8 @@ namespace GOAP.WorldStates
         /// <returns></returns>
         public Dictionary<string, int> GetStates()
         {
-            Debug.Log("GetStates called");
-            return _worldStateDictionary;
+            // 常にコピーを返すようにして、プランナーが元の値を壊さないようにする
+            return new Dictionary<string, int>(_worldStateDictionary);
         }
     }
 }

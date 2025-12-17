@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GOAP.WorldStates;
 using UnityEngine;
 
 public class MoveToTarget : IAction
@@ -19,6 +20,7 @@ public class MoveToTarget : IAction
     //実行時変数
     private Transform _target;
     private bool _isMoving;
+    [SerializeField]
     private string _targetTag;
 
     public bool CheckPrecondition(GAgent agent)
@@ -42,19 +44,25 @@ public class MoveToTarget : IAction
 
     public bool Perform(GAgent agent)
     {
-        if (!_isMoving || _target == null) return false;
+        // ターゲットがいない場合は失敗として中断
+        if (_target == null) return false;
 
         float distance = Vector3.Distance(agent.transform.position, _target.position);
-        if (distance <= _stopDistance)
-        {
-            Debug.Log($"{GetType().Name}アクション完了");
-            return true;
-        }
-        //移動
-        Vector3 direction = (_target.position - agent.transform.position).normalized;
-        agent.transform.position += direction * _speed * Time.deltaTime;
 
-        //まだ完了していない
-        return false;
+        // まだ離れている場合
+        if (distance > _stopDistance)
+        {
+            // 移動処理
+            Vector3 direction = (_target.position - agent.transform.position).normalized;
+            agent.transform.position += direction * _speed * Time.deltaTime;
+
+            // 【重要】まだ終わっていないので false を返す
+            // これにより、GAgentは次のアクションに進まずにこのメソッドを呼び続けます
+            return false;
+        }
+
+        // 到着した
+        Debug.Log($"{GetType().Name} : 目的地に到着しました。");
+        return true;
     }
 }
