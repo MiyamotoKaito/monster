@@ -15,6 +15,7 @@ namespace GOAP.WorldStates
     public class WorldStates : MonoBehaviour
     {
         public static WorldStates Instance;
+        public Dictionary<string, int> WorldStateDictionary => _worldStateDictionary;
         [SerializeField]
         private List<WorldState> _worldState;
 
