@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using GOAP.WorldStates;
 using UnityEngine;
 
 public class MoveToTarget : IAction
 {
-    public Dictionary<string, int> Preconditions => new Dictionary<string, int>() { {"HasTarget", 1 } };
+    public Dictionary<string, int> Preconditions => new Dictionary<string, int>() { { _precondition.ToString(), 1 } };
 
-    public Dictionary<string, int> Effects => new Dictionary<string, int>() { { "AtTarget", 1 } };
+    public Dictionary<string, int> Effects => new Dictionary<string, int>() { { _effect.ToString(), 1 } };
 
     public int Cost => _cost;
 
@@ -16,7 +15,9 @@ public class MoveToTarget : IAction
     private float _speed;
     [SerializeField]
     private float _stopDistance;
-    
+    [SerializeField] private WorldStateType _precondition;
+    [SerializeField] private WorldStateType _effect;
+
     //実行時変数
     private Transform _target;
     private bool _isMoving;
