@@ -677,12 +677,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GOAP.WorldStates.WorldStates
   _worldState:
-  - WorldName: IsFull
-    Value: 0
-  - WorldName: AtTarget
-    Value: 0
-  - WorldName: HasTarget
-    Value: 0
+  - Value: 0
+    _worldStateType: 0
+  - Value: 0
+    _worldStateType: 1
 --- !u!4 &463815956
 Transform:
   m_ObjectHideFlags: 0
@@ -1742,8 +1740,6 @@ GameObject:
   - component: {fileID: 2104015379}
   - component: {fileID: 2104015378}
   - component: {fileID: 2104015377}
-  - component: {fileID: 2104015382}
-  - component: {fileID: 2104015381}
   - component: {fileID: 2104015383}
   - component: {fileID: 2104015384}
   m_Layer: 0
@@ -1848,34 +1844,6 @@ Transform:
   - {fileID: 308645952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2104015381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104015376}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48432358c28883b40bcb1659e17ae1b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FindPath
-  _startPos: {fileID: 57930171}
-  _endPos: {fileID: 1574587096}
---- !u!114 &2104015382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104015376}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25850f2becbd66c41ac98fc412bdb5e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AgentMove
-  _speed: 5
-  _distance: 0.5
 --- !u!114 &2104015383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1902,6 +1870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurvivalStats
   _hunger: 5
+  _subGoal: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
