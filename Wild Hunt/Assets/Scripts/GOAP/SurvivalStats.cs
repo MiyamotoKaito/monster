@@ -5,6 +5,8 @@ public class SurvivalStats : MonoBehaviour
     [SerializeField]
     [Header("空腹度")]
     private float _hunger = 0;
+    [SerializeField]
+    private SubGoalType _subGoal;
     /// <summary>サブゴールを追加するためのGAgent</summary>
     private GAgent _agent;
     /// <summary>目標を追加するかどうか</summary>
@@ -24,7 +26,7 @@ public class SurvivalStats : MonoBehaviour
             if (!_isHungerGoalActive)
             {
                 Debug.Log($"{_hunger}サブゴール追加");
-                GSubGoal eatGoal = new GSubGoal("IsFull", 10, true);
+                GSubGoal eatGoal = new GSubGoal(_subGoal.ToString(), 10, true);
                 _agent.AddSubGoal(10, eatGoal);
                 _isHungerGoalActive = true;
             }
