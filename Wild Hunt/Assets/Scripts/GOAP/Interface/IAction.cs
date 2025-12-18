@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 public interface IAction
 {
     // --- 計画策定フェーズ (GPlannerが参照する静的な定義) ---
