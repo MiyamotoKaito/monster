@@ -6,19 +6,24 @@ using System.Linq;
 
 public class GAgent : MonoBehaviour
 {
-    private Dictionary<int, GSubGoal> _subGoals = new();
+    public Dictionary<GSubGoal, int> SubGoals => _subGoals;
+    public GameObject TargetObj => _targetObj;
+
+    private Dictionary<GSubGoal, int> _subGoals = new();
     private Queue<IAction> _actionQueue = new();
 
     [SerializeField]
     [Header("アクションのデータ")]
     private MonsterActionsData _actionsData;
 
+    [SerializeReference]
     private IAction _currentAction;
     private WorldStates _worldStates;
 
     // 計画再計算のためのクールダウン
     private float _planningTimer = 0f;
     private float _planningInterval = 0.2f;
+    private GameObject _targetObj;
 
     private void Start()
     {
@@ -63,17 +68,19 @@ public class GAgent : MonoBehaviour
         _planningTimer = 0f;
 
         Dictionary<string, int> currentState = _worldStates.GetStates();
-        var sortedGoals = _subGoals.OrderByDescending(entry => entry.Key).ToList();
+        var sortedGoals = _subGoals.OrderByDescending(entry => entry.Value).ToList();
 
-        foreach (var entry in sortedGoals)
+        foreach (var goal in sortedGoals)
         {
-            if (GoalAchieved(entry.Value.SubGoals, currentState)) continue;
+            if (GoalAchieved(goal.Key.SubGoals, currentState)) continue;
 
-            Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(), entry.Value.SubGoals, currentState);
+            Queue<IAction> plan = GPlanner.Planning(_actionsData.Actions.ToList(), goal.Key.SubGoals, currentState);
 
             if (plan != null && plan.Count > 0)
             {
                 _actionQueue = plan;
+                _currentAction = null;
+                _targetObj = goal.Key.TargetObj;
                 Debug.Log("[GAgent] 新しい計画を採用しました。実行フェーズに移行します。");
                 break;
             }
@@ -94,11 +101,11 @@ public class GAgent : MonoBehaviour
         return true;
     }
 
-    public void AddSubGoal(int priority, GSubGoal goal)
+    public void AddSubGoal(GSubGoal goal, int priority)
     {
-        if (!_subGoals.ContainsKey(priority))
+        if (!_subGoals.ContainsKey(goal))
         {
-            _subGoals.Add(priority, goal);
+            _subGoals.Add(goal, priority);
         }
     }
 
@@ -107,6 +114,13 @@ public class GAgent : MonoBehaviour
         foreach (var entry in effect)
         {
             _worldStates.ModifyState(entry.Key, entry.Value);
+        }
+    }
+    public void ModifyGoalPriority(GSubGoal goal, int value)
+    {
+        if (_subGoals.ContainsKey(goal))
+        {
+            _subGoals[goal] += value;
         }
     }
 }
