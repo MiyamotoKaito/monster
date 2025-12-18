@@ -29,7 +29,7 @@ MonoBehaviour:
       type: {class: Drink, ns: , asm: Assembly-CSharp}
       data:
         _cost: 3
-        _targetTag: 
+        _targetTag: Water
         _drinkAmount: 3
         _precondition: 1
         _subGoal: 1
