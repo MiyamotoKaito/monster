@@ -6,8 +6,11 @@ namespace GOAP.WorldStates
     [System.Serializable]
     public class WorldState
     {
-        public string WorldName;
+        public string WorldName => _worldStateType.ToString();
         public int Value;
+        
+
+        [SerializeField] private WorldStateType _worldStateType;
     }
     /// <summary>
     /// ワールドステートの状態を管理するクラス
