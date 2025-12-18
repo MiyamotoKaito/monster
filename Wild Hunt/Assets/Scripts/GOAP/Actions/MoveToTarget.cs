@@ -1,26 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveToTarget : IAction
+public class MoveToTarget : ActionBase, IAction
 {
     public Dictionary<string, int> Preconditions => new Dictionary<string, int>() { { _precondition.ToString(), 1 } };
 
     public Dictionary<string, int> Effects => new Dictionary<string, int>() { { _effect.ToString(), 1 } };
 
     public int Cost => _cost;
-
-    [SerializeField]
-    private int _cost;
-    [SerializeField]
-    private float _speed;
-    [SerializeField]
-    private float _stopDistance;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _stopDistance;
     [SerializeField] private WorldStateType _precondition;
     [SerializeField] private WorldStateType _effect;
 
     //実行時変数
     private Transform _target;
-    private bool _isMoving;
     [SerializeField]
     private string _targetTag;
 
@@ -31,16 +25,7 @@ public class MoveToTarget : IAction
 
     public void Execute(GAgent agent)
     {
-        GameObject targetobj = GameObject.FindGameObjectWithTag(_targetTag);
-        if (targetobj != null)
-        {
-            _target = targetobj.transform;
-            _isMoving = true;
-        }
-        else
-        {
-            _isMoving = false;
-        }
+        _target = agent.TargetObj.transform;
     }
 
     public bool Perform(GAgent agent)
