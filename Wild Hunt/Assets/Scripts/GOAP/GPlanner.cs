@@ -29,7 +29,8 @@ namespace GOAP.GPlanner
                 return ReconstructPath(cheapest);
             }
 
-            Debug.LogWarning("<color=red>[GOAP Planner] 計画失敗: ゴールに到達できるアクションの組み合わせがありません</color>");
+            Debug.LogWarning("<color=red>[GOAP Planner] 計画失敗: ゴールに到達できるアクションの組み合わせがありません" +
+              "BuildGraphがfalseです</color>");
             return null;
         }
 
