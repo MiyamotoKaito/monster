@@ -21,9 +21,7 @@ public class Drink : ActionBase, IAction
 
     public bool CheckPrecondition(GAgent agent)
     {
-        if (!_target) return false;
-
-        return true;
+        return _target != null;
     }
 
     public void Execute(GAgent agent)
