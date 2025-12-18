@@ -37,7 +37,7 @@ public class SurvivalStats : MonoBehaviour
         {
             if (!_isHungerGoalActive)
             {
-                Debug.Log($"{_hunger}サブゴール追加");
+                Debug.Log($"{_eatSubGoal}サブゴール追加");
                 var target = GameObject.FindGameObjectWithTag("Food");
                 GSubGoal eatGoal = new GSubGoal(_eatSubGoal.ToString(), 1, true, target);
                 if (!_agent.SubGoals.ContainsKey(eatGoal))
@@ -48,15 +48,16 @@ public class SurvivalStats : MonoBehaviour
                 else
                 {
                     _agent.ModifyGoalPriority(eatGoal, 1);
+                    Debug.Log("すでに追加されているので優先度変更");
                 }
-                _hunger = 5;
             }
+            _hunger = 5;
         }
         if (_thirst < 0)
         {
             if (!_isThirstGoalActive)
             {
-                Debug.Log($"{_thirst}サブゴール追加");
+                Debug.Log($"{_drinkSubGoal}サブゴール追加");
                 var target = GameObject.FindGameObjectWithTag("Water");
                 GSubGoal drinkGoal = new GSubGoal(_drinkSubGoal.ToString(), 1, true, target);
                 if (!_agent.SubGoals.ContainsKey(drinkGoal))
